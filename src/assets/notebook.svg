@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="314" viewBox="0 0 1024 314" role="img" aria-label="Notebook wordmark">
+  <title>Notebook</title>
+  <desc>Notebook wordmark with transparent background, black text</desc>
+  <style>
+    text {
+      fill: #111111;
+      font-family: "Pacifico", "Brush Script MT", "Segoe Script", "Comic Sans MS", cursive;
+      font-size: 230px;
+      letter-spacing: 2px;
+      text-rendering: geometricPrecision;
+    }
+  </style>
+  <!-- Transparent background by default: no rect filled -->
+  <g transform="translate(10,245)">
+    <text x="0" y="0">Notebook</text>
+  </g>
+</svg>

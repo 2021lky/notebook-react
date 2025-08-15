@@ -1,0 +1,136 @@
+/* 整体容器 */
+.rc-tree {
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  color: var(--text-color);
+  padding: 18px 10px;
+}
+
+/* 隐藏所有默认的 switcher 图标 */
+.rc-tree-switcher-icon,
+.rc-tree-switcher-loading-icon,
+.rc-tree-switcher-leaf-line {
+  display: none !important;
+}
+
+/* 重置 switcher 容器样式 */
+.rc-tree-switcher {
+  align-items: center;
+  width: 20px;
+  height: auto;
+  background: transparent !important;
+  border: none !important;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* 单个节点容器 */
+.rc-tree-treenode {
+  display: flex;
+  align-items: center;
+  outline: 0;
+  transition: all 0.3s ease;
+  margin: 4px 0 !important;
+  height: 40px !important; /* 强制设置高度 */
+}
+
+/* 节点内容区域 */
+.rc-tree-node-content-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  width: 100% !important;
+  height: 32px !important; /* 强制设置高度 */
+  box-sizing: border-box !important;
+  min-width: 0; /* 允许内容收缩 */
+  overflow: hidden; /* 防止内容溢出 */
+}
+
+.rc-tree-title {
+  width: 100% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  user-select: none;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  box-sizing: border-box !important;
+}
+
+.tree-more-trigger {
+  display: flex;
+  align-items: center;
+  width: 24px;
+  height: auto;
+  flex-shrink: 0;
+}
+
+/* 选中节点样式 */
+.rc-tree-node-selected {
+  border: 1px solid var(--primary-color);
+  background-color: var(--bg-tertiary);
+  font-weight: 500;
+  box-shadow: 0 0 4px var(--primary-color);
+  color: var(--text-color);
+}
+
+/* 自定义展开图标样式 */
+.custom-expand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--primary-color);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.custom-expand-icon:hover {
+  background-color: var(--bg-primary);
+  transform: scale(1.1);
+}
+
+.rc-tree-switcher,
+.custom-expand-icon,
+.leaf-spacer,
+.rc-tree-indent {
+  flex-shrink: 0; /* 防止这些元素被压缩 */
+}
+
+/* 控制缩进单元的宽度 */
+.rc-tree-indent-unit {
+  width: 16px !important; /* 适中的缩进宽度 */
+  min-width: 16px !important;
+  max-width: 16px !important;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.rc-tree-indent-unit-start,
+.rc-tree-indent-unit-end {
+  width: 16px !important; /* 统一缩进单元宽度 */
+  min-width: 16px !important;
+  max-width: 16px !important;
+  flex-shrink: 0;
+}
+
+/* 整体缩进容器控制 */
+.rc-tree-indent {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: 0; /* 允许缩进容器收缩 */
+}
+
+.custom-more-icon {
+  width: 20px;
+  height: 20px;
+}

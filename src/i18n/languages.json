@@ -1,0 +1,16 @@
+{
+    "languages": [
+        {
+            "name": "English",
+            "nativeName": "English",
+            "code": "en",
+            "supported": true
+        },
+        {
+            "name": "简体中文",
+            "nativeName": "Chinese",
+            "code": "zh",
+            "supported": true
+        }
+    ]
+}

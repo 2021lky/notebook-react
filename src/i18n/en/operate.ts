@@ -1,0 +1,51 @@
+const translation = {
+    save: 'Save',
+    delete: 'Delete',
+    edit: 'Edit',
+    add: 'Add',
+    cancel: 'Cancel',
+    search: 'Search',
+    aiSearch: 'AI Search',
+    confirm: 'Confirm',
+    error: {
+        authFailed: 'Authentication failed, please login again',
+        passwordValid: 'Password must contain only letters and numbers, and be at least 8 characters long',
+        newPasswordNotSame: 'New password and confirm password do not match',
+        fileLoadFailed: 'Failed to load file content',
+        fileSaveFailed: 'Failed to save file',
+        fileUploadSimulateFailed: 'File upload simulation failed',
+        tokenRefreshFailed: 'Token refresh failed, please login again',
+        fileUploadFailed: 'File upload failed, please try again',
+        requestAborted: 'Request aborted',
+        sendMessageFailed: 'Failed to send message, please try again',
+        getFileContentFailed: 'Failed to get file content, please try again',
+        fileIconLoadFailed: 'Failed to load file icon',
+        refreshTreeFailed: 'Failed to refresh file tree',
+        createFolderFailed: 'Failed to create folder',
+        createFileFailed: 'Failed to create file',
+        deleteFailed: 'Failed to delete',
+        renameFailed: 'Failed to rename',
+        nameNoNone: 'Username cannot be empty',
+        emailNoNone: 'Email cannot be empty',
+        emailValid: 'Email format is incorrect',
+        // 新增的错误信息
+        passwordResetFailed: 'Password reset failed',
+        userInfoSaveFailed: 'Failed to save user information',
+        taskSaveFailed: 'Failed to save tasks',
+        llmStopFailed: 'Failed to stop LLM',
+    },
+    success: {
+        fileSaved: 'File saved successfully',
+        folderCreated: 'Folder created successfully',
+        fileCreated: 'File created successfully',
+        nodeDeleted: '"{{name}}" deleted successfully',
+        projectDeleted: 'Project deleted successfully',
+        nodeRenamed: '"{{name}}" renamed successfully',
+        projectRenamed: 'Project renamed successfully',
+        // 新增的成功信息
+        passwordResetSuccess: 'Password reset successfully',
+        userInfoSaveSuccess: 'User information saved successfully',
+        taskSaveSuccess: 'Tasks saved successfully'
+    }
+}
+export default translation;

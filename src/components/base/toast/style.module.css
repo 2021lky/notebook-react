@@ -1,0 +1,167 @@
+/* Toast容器样式 */
+.toastContainer {
+  position: fixed;
+  width: 360px;
+  border-radius: 0.75rem;
+  margin: 1rem 2rem;
+  flex-grow: 1;
+  z-index: 9999;
+  overflow: hidden;
+  border: 1px solid var(--components-panel-border-subtle);
+  background: var(--components-panel-bg-blur);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  top: 0;
+  right: -1rem;
+}
+
+.toastContainerMd {
+  padding: 0.75rem;
+}
+
+.toastContainerSm {
+  padding: 0.5rem;
+}
+
+/* 背景色层 */
+.backgroundLayer {
+  position: absolute;
+  inset: 0;
+  z-index: -10;
+  opacity: 0.4;
+}
+
+.backgroundSuccess {
+  background-color: var(--toast-success-bg);
+}
+
+.backgroundWarning {
+  background-color: var(--toast-warning-bg);
+}
+
+.backgroundError {
+  background-color: var(--toast-error-bg);
+}
+
+.backgroundInfo {
+  background-color: var(--toast-info-bg);
+}
+
+/* 内容布局 */
+.contentWrapper {
+  display: flex;
+}
+
+.contentWrapperMd {
+  gap: 0.25rem;
+}
+
+.contentWrapperSm {
+  gap: 0.125rem;
+}
+
+/* 图标容器 */
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconContainerMd {
+  padding: 0.125rem;
+}
+
+.iconContainerSm {
+  padding: 0.25rem;
+}
+
+/* 图标样式 */
+.iconMd {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.iconSm {
+  height: 1rem;
+  width: 1rem;
+}
+
+.iconSuccess {
+  color: var(--text-success);
+}
+
+.iconError {
+  color: var(--text-destructive);
+}
+
+.iconWarning {
+  color: var(--text-warning-secondary);
+}
+
+.iconInfo {
+  color: var(--text-accent);
+}
+
+/* 文本容器 */
+.textContainer {
+  display: flex;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+}
+
+.textContainerMd {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.textContainerSm {
+  padding-left: 0.125rem;
+  padding-right: 0.125rem;
+}
+
+/* 消息行 */
+.messageRow {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* 消息文本 */
+.messageText {
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+/* 子内容 */
+.childrenText {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--text-secondary);
+}
+
+/* 关闭按钮 */
+.closeButton {
+  color: var(--text-primary);
+  z-index: 1000;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: transparent;
+}
+
+.closeIcon {
+  height: 1rem;
+  width: 1rem;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}

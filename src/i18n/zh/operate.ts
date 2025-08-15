@@ -1,0 +1,51 @@
+const translation = {
+    save: '保存',
+    delete: '删除',
+    edit: '编辑',
+    add: '添加',
+    cancel: '取消',
+    search: '搜索',
+    aiSearch: 'AI搜索',
+    confirm: '确认',
+    error: {
+        authFailed: '身份验证失败，请重新登录',
+        passwordValid: '密码必须只包含字母和数字，且长度至少为8位',
+        newPasswordNotSame: '新密码和确认密码不一致',
+        fileLoadFailed: '文件内容加载失败',
+        fileSaveFailed: '文件保存失败',
+        fileUploadSimulateFailed: '文件上传模拟失败',
+        tokenRefreshFailed: 'Token刷新失败，请重新登录',
+        fileUploadFailed: '文件上传失败，请重试',
+        requestAborted: '请求已中断',
+        sendMessageFailed: '发送消息失败，请重试',
+        getFileContentFailed: '获取文件内容失败，请重试',
+        fileIconLoadFailed: '文件图标加载失败',
+        refreshTreeFailed: '刷新文件树失败',
+        createFolderFailed: '创建文件夹失败',
+        createFileFailed: '创建文件失败',
+        deleteFailed: '删除失败',
+        renameFailed: '重命名失败',
+        nameNoNone: '用户名不能为空',
+        emailNoNone: '邮箱不能为空',
+        emailValid: '邮箱格式错误',
+        // 新增的错误信息
+        passwordResetFailed: '密码重置失败',
+        userInfoSaveFailed: '用户信息保存失败',
+        taskSaveFailed: '任务保存失败',
+        llmStopFailed: 'LLM停止失败',
+    },
+    success: {
+        fileSaved: '文件保存成功',
+        folderCreated: '文件夹创建成功',
+        fileCreated: '文件创建成功',
+        nodeDeleted: '"{{name}}"删除成功',
+        projectDeleted: '项目删除成功',
+        nodeRenamed: '"{{name}}"重命名成功',
+        projectRenamed: '项目重命名成功',
+        // 新增的成功信息
+        passwordResetSuccess: '密码重置成功',
+        userInfoSaveSuccess: '用户信息保存成功',
+        taskSaveSuccess: '任务保存成功'
+    }
+}
+export default translation;
