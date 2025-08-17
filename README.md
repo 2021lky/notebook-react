@@ -1,6 +1,7 @@
 # notebook-react
 笔记本网页
 
+后端代码：https://github.com/2021lky/nodebook-background
 
 首页
 - 支持新建、删除、重命名文件夹
