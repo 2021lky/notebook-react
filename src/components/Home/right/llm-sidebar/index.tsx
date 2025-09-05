@@ -47,28 +47,20 @@ const LLMSidebar: React.FC<Props> = ({ isOpen, onClose, initialText }) => {
 
     return (
         <div 
-            className="absolute top-0 right-0 w-80 flex flex-col rounded-lg z-50"
-            style={{
-                height: 'calc(100% - 48px)',
-                border: '1px solid #e5e7eb',
-                backgroundColor: '#ffffff'
-            }}
+            className="absolute top-0 right-0 w-80 flex flex-col rounded-md z-50 h-full bg-transparent border border-border-dark p-1"
         >
             {/* Header */}
             <div 
-                className="flex items-center h-12 justify-between p-2 flex-shrink-0"
-                style={{
-                    borderBottom: '1px solid #e5e7eb'
-                }}
+                className="flex items-center h-12 justify-between p-2 flex-shrink-0 border-b border-border-dark"
             >
-                <h3 className="text-lg font-semibold text-gray-800">{t('common.llm.aiAssistant')}</h3>
-                <RiCloseCircleLine onClick={onClose} className='cursor-pointer w-4 h-4'/>
+                <h3 className="text-lg font-semibold text-text-primary">{t('common.llm.aiAssistant')}</h3>
+                <RiCloseCircleLine onClick={onClose} className='cursor-pointer text-text-primary w-4 h-4'/>
             </div>
 
             {/* Messages */}
             <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 w-full" style={{ minHeight: 0 }}>
                 {messages.length === 0 ? (
-                    <div className="text-center text-gray-500 mt-8">
+                    <div className="text-center text-text-primary mt-8">
                         <p>{t('common.llm.startConversation')}</p>
                     </div>
                 ) : (
@@ -81,18 +73,18 @@ const LLMSidebar: React.FC<Props> = ({ isOpen, onClose, initialText }) => {
                                 <div
                                     className={`w-full lg:max-w-md px-4 py-2 rounded-lg mb-2 ${
                                         message.role === 'user'
-                                            ? 'text-primary'
-                                            : 'bg-tertiary text-primary'
+                                            ? 'text-text-primary'
+                                            : 'bg-primary-200 text-text-primary'
                                     }`}
                                 >
                                     {message.role === 'user' ? (
                                         <div className="w-full flex justify-end">
-                                            <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                                            <p className="text-sm text-text-primary whitespace-pre-wrap">{message.content}</p>
                                         </div>
                                     ) : (
                                         <MarkdownRenderer 
                                             content={message.content} 
-                                            className="text-sm max-w-full"
+                                            className="text-sm max-w-full text-text-primary"
                                         />
                                     )}
                                 </div>
@@ -102,13 +94,13 @@ const LLMSidebar: React.FC<Props> = ({ isOpen, onClose, initialText }) => {
                         {/* 流式输出内容 - 在消息列表中显示 */}
                         {currentStreamContent && (
                             <div className="w-full flex justify-start">
-                                <div className="w-full lg:max-w-md bg-tertiary text-primary px-4 py-2 rounded-lg mb-2 overflow-hidden">
+                                <div className="w-full lg:max-w-md bg-primary-200 text-text-primary px-4 py-2 rounded-lg mb-2 overflow-hidden">
                                     <MarkdownRenderer 
                                         content={currentStreamContent} 
-                                        className="text-sm max-w-full break-words whitespace-pre-wrap"
+                                        className="text-sm max-w-full break-words whitespace-pre-wrap text-text-primary"
                                     />
                                     {isStreaming && (
-                                        <span className="inline-block w-2 h-4 bg-tertiary animate-pulse ml-1 align-middle"></span>
+                                        <span className="inline-block w-2 h-4 bg-primary-200 animate-pulse ml-1 align-middle"></span>
                                     )}
                                 </div>
                             </div>

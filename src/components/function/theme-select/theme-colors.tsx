@@ -2,8 +2,8 @@ import { useTranslation } from 'react-i18next';
 
 export type ThemeColor = {
   name: string;
+  value: string;
   primary: string;
-  nameKey: string;
 }
 
 // 应从后端获取主题列表，这里为了方便前端写死
@@ -13,33 +13,28 @@ const getThemeColors = (): ThemeColor[] => {
   return [
     {
       name: t('common.themes.defaultBlue'),
-      nameKey: 'defaultBlue',
-      primary: "#1C64F2"
+      value: "default",
+      primary: "#409eff",
     },
     {
       name: t('common.themes.vibrantOrange'),
-      nameKey: 'vibrantOrange',
-      primary: '#ff6b35'
+      value: "orange",
+      primary: "#f97316",
     },
     {
       name: t('common.themes.freshGreen'),
-      nameKey: 'freshGreen',
-      primary: '#4ade80'
+      value: "green",
+      primary: "#10b981"
     },
     {
       name: t('common.themes.elegantPurple'),
-      nameKey: 'elegantPurple',
-      primary: '#a855f7'
+      value: "purple",
+      primary: "#8b5cf6"
     },
     {
-      name: t('common.themes.warmRed'),
-      nameKey: 'warmRed',
-      primary: '#ef4444'
-    },
-    {
-      name: t('common.themes.deepBlue'),
-      nameKey: 'deepBlue',
-      primary: '#3b82f6'
+      name: t('common.themes.deepDark'),
+      value: "dark",
+      primary: "#0f172a"
     }
   ];
 };

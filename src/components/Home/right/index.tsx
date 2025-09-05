@@ -3,10 +3,11 @@ import { TreeNodeData } from '../left';
 import LLMSidebar from './llm-sidebar';
 import FloatingButton from './FloatingButton';
 import TextSelectionBubble from './TextSelectionBubble';
-import EditorComponent from "@/components/base/editor";
+import EditorComponent from "@/components/function/editor";
 import { getFileContent, updateFileContent, type FileInfo } from '@/service/fileSystem';
 import { useToastContext } from '@/components/base/toast';
 import { useTranslation } from 'react-i18next';
+import Button from "@/components/base/Button"
 
 type Props = {
     selectedNode: TreeNodeData | null;
@@ -144,25 +145,25 @@ const ContentRight = ({ selectedNode }: Props) => {
                              </div>
                          ) : (
                              <div className="h-full flex flex-col">
-                                 <div className="flex items-center justify-between p-2 bg-primary">
+                                 <div className="flex items-center justify-between p-2 bg-transparent">
                                      <div className="flex flex-col">
-                                         <span className="text-sm font-medium text-gray-800">
+                                         <span className="text-sm font-medium text-text-primary">
                                               {fileInfo?.name || selectedNode.name || selectedNode.title}
                                           </span>
                                          {fileInfo && (
-                                             <span className="text-xs text-gray-500">
+                                             <span className="text-xs text-text-primary">
                                                  {fileInfo.mime_type} • {(fileInfo.size / 1024).toFixed(2)} KB
                                              </span>
                                          )}
                                      </div>
                                      <div className="flex items-center gap-2">
                                          {hasUnsavedChanges && (
-                                             <button
+                                             <Button
                                                  onClick={handleSaveFile}
-                                                 className="px-3 py-1 bg-secondary text-sm rounded hover:bg-tertiary border-none"
+                                                 className="px-3 py-1"
                                              >
                                                  {t('operate.save')}
-                                             </button>
+                                             </Button>
                                          )}
                                      </div>
                                  </div>

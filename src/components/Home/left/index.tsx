@@ -46,7 +46,7 @@ const BasicTree: React.FC<{data: TreeNodeData[], onSelect: (selectedKey: string)
         titleRender={(node: TreeNodeData) => (
             <>
                 {/* 节点标题 */}
-                <div className="truncate" style={{overflow: 'hidden',
+                <div className="truncate text-text-primary" style={{overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
                   display: 'inline-block',
@@ -56,7 +56,7 @@ const BasicTree: React.FC<{data: TreeNodeData[], onSelect: (selectedKey: string)
                 
                 {/* 右侧more图标 */}
                 <div className="tree-more-trigger">
-                    { node.isLeaf ? <FileMoreTrigger data={node} /> : <DirMoreTrigger data={node} /> }
+                    { node.isLeaf ? <FileMoreTrigger data={node}/> : <DirMoreTrigger data={node} /> }
                 </div>
             </>
         )}

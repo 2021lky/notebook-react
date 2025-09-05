@@ -4,14 +4,14 @@ import {
   PortalToFollowElem,
   PortalToFollowElemContent,
   PortalToFollowElemTrigger,
-} from '@/components/base/portal-to-follow-elem'
+} from '@/components/base/PortalToFollowElem'
 import { useTranslation } from 'react-i18next'
 import { RiLogoutCircleRLine } from '@remixicon/react'
 import LanguageTrigger from './language-trigger'
 import { getLocale } from "@/i18n/index"
-import ThemeTrigger from "@/components/base/theme-select"
-import { useThemeContext } from "@/contexts/theme-context"
-import getThemeColors  from "@/components/base/theme-select/theme-colors"
+import ThemeTrigger from "@/components/function/theme-select"
+import { useTheme } from "@/contexts/theme-context"
+import getThemeColors  from "@/components/function/theme-select/theme-colors"
 import { useAuth } from "@/hooks/use-auth"
 import { useNavigate } from "react-router-dom"
 
@@ -24,7 +24,7 @@ const Account = ({
 }: Props) => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
-  const { triggerTheme, theme } = useThemeContext()
+  const { setTheme, theme } = useTheme()
   const themeColors = getThemeColors()
   const { logout } = useAuth()
   const navigate = useNavigate()
@@ -45,25 +45,25 @@ const Account = ({
         setOpen(!open)
       }}>
         <div className="flex items-center">
-          <img src="/avatar.jpg" className="w-6 h-6 rounded-full" />
-          <div>{data?.name}</div>
+          <img src="/avatar.jpg" className="w-8 h-8 rounded-full" />
+          <div className="text-text-primary">{data?.name}</div>
         </div>
       </PortalToFollowElemTrigger>
       <PortalToFollowElemContent className='z-[1000]'>
-        <div className="flex flex-col gap-sm w-24 card p-2 bg-secondary">
+        <div className="flex flex-col gap-1 w-24 rounded-md p-2 bg-secondary-200 boxShadow-sm">
             <LanguageTrigger data={getLocale()}>
-                <div className="cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-white">
+                <div className="cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-primary-400 text-text-primary">
                     {t('common.account.language')}
                 </div>
             </LanguageTrigger>
             <ThemeTrigger
             onSelect={(theme) => {
-              triggerTheme(theme.primary)
+              setTheme(theme.value)
               setOpen(false)
             }}
-            data={themeColors.find((item) => item.primary === theme.colorTheme)}
+            data={themeColors.find((item) => item.value === theme)}
             >
-              <div className="cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-white">
+              <div className="cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-primary-400 text-text-primary">
                   {t('common.account.theme')}
               </div>
             </ThemeTrigger>
@@ -72,7 +72,7 @@ const Account = ({
                 setOpen(false)
                 navigate('/setting')
               }}
-              className="cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-white"
+              className="cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-primary-400 text-text-primary"
             >
                 {t('common.account.setting')}
             </div>
@@ -82,10 +82,10 @@ const Account = ({
                   setOpen(false)
                   navigate('/signin')
               }}
-              className="flex items-center cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-white"
+              className="flex items-center cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-primary-400 text-text-primary"
             >
                 <div>{t('common.account.logout')}</div>
-                <RiLogoutCircleRLine style={{width: '16px', height: '16px'}} />
+                <RiLogoutCircleRLine className="w-4 h-4" />
             </div>
         </div>
       </PortalToFollowElemContent>

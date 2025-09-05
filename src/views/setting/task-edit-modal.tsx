@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
-import Modal from '@/components/base/modal'
+import Modal from '@/components/base/Modal'
 import { useToastContext } from '@/components/base/toast'
 import { useTranslation } from 'react-i18next'
 import { RiDeleteBinLine } from '@remixicon/react'
-import { StudyGoal } from '@/components/base/canlendar'
+import { StudyGoal } from '@/components/function/Canlendar'
 import { getTaskDaily } from '@/service/schedule'
+import Button from '@/components/base/Button'
+import Input from '@/components/base/Input'
 
 type TaskEditModalProps = {
   open: boolean
@@ -70,26 +72,26 @@ const TaskEditModal: React.FC<TaskEditModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="mb-4">
-          <input 
+          <Input 
             id="task-date"
             type="date" 
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-3 py-2"
           />
         </div>
         <div className="space-y-3 max-h-[400px] overflow-y-auto">
           {tasks.map((task, index) => (
             <div key={task.id || `task-${index}`} className="flex items-center mb-2 mt-1 rounded-lg border-none transition-colors">
-              <div className="mr-2 flex-shrink-0 w-[36px] h-[36px] flex items-center justify-center bg-secondary text-primary rounded text-sm font-medium">
+              <div className="mr-2 flex-shrink-0 w-[36px] h-[36px] flex items-center justify-center bg-secondary text-text-primary rounded text-sm font-medium">
                 {index + 1}
               </div>
-              <input
+              <Input
                 type="text"
                 value={task.title}
                 onChange={(e) => handleUpdateTask(index, e.target.value)}
                 placeholder={`任务 ${index + 1}`}
-                className="mr-1 flex-1 px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:border-transparent"
+                className="mr-1 flex-1 px-3 py-2"
               />
               <button
                 type="button"
@@ -105,20 +107,21 @@ const TaskEditModal: React.FC<TaskEditModalProps> = ({
 
         </div>
 
-        <div className="flex w-full items-center justify-end gap-2 pt-4 ">
-          <button
+        <div className="flex w-full items-center justify-end pt-4 ">
+          <Button
             type="button"
+            variant={"secondary"}
             onClick={onClose}
-            className="cursor-pointer mr-2 px-4 py-2 text-sm font-medium bg-white rounded-md border border-gray-300 rounded-md"
+            className="cursor-pointer mr-2 px-4 py-2"
           >
             {t('operate.cancel')}
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="cursor-pointer px-4 py-2 text-sm font-medium text-white bg-tertiary rounded-md border-none rounded-md"
+            className="cursor-pointer px-4 py-2"
           >
             {t('operate.confirm')}
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

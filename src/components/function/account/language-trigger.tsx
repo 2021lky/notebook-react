@@ -4,7 +4,7 @@ import {
   PortalToFollowElem,
   PortalToFollowElemContent,
   PortalToFollowElemTrigger,
-} from '@/components/base/portal-to-follow-elem'
+} from '@/components/base/PortalToFollowElem'
 import { changeLanguage } from '@/i18n/i18next-config'
 import languages from "@/i18n/language"
 
@@ -57,18 +57,18 @@ const LanguageTrigger = ({
         onMouseEnter={mouseEnter}
         onMouseLeave={() => setOpen(false)}
       >
-        <div className="flex flex-col gap-1 w-32 card p-2 bg-secondary">
+        <div className="flex flex-col gap-1 w-32 card p-2 bg-secondary-200 rounded boxShadow-sm">
             {languages.map((item) => (
               <div 
                 onClick={() => {
-                  changeLanguage(item.code)
+                  changeLanguage(item.value)
                   setOpen(false)
                 }}
-                className={`${hover === item.code ? 'bg-tertiary' : 'bg-white'} rounded select-text px-2 cursor-pointer`} key={item.code}
-                onMouseEnter={() => setHover(item.code)}
+                className={`${hover === item.value ? 'bg-tertiary' : 'bg-primary-400'} rounded select-text px-2 cursor-pointer`} key={item.value}
+                onMouseEnter={() => setHover(item.value)}
                 onMouseLeave={() => setHover(data!)}
               >
-                {item.name}
+                <span className="text-text-primary">{item.name}</span>
               </div>
             ))}
         </div>

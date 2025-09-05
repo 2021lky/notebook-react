@@ -109,7 +109,7 @@ const FloatingButton = ({ onClick, isVisible }: Props) => {
     return (
         <button
             ref={buttonRef}
-            className="fixed z-40 p-2 hover:bg-tertiary text-white rounded-full shadow-lg transition-colors duration-200 flex items-center justify-center cursor-move"
+            className="fixed z-40 p-2 hover:bg-tertiary text-text-primary bg-primary rounded-full shadow-lg transition-colors duration-200 flex items-center justify-center cursor-move"
             style={{
                 left: `${position.x}px`,
                 top: `${position.y}px`,

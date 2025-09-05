@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import Modal from '@/components/base/modal'
+import Modal from '@/components/base/Modal'
 import { useToastContext } from '@/components/base/toast';
 import { useTranslation } from 'react-i18next'
+import Button from '@/components/base/Button'
+import Input from '@/components/base/Input'
 
 type UserEditModalProps = {
   open: boolean;
@@ -64,43 +66,44 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
        <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex items-center mb-2">
           <label htmlFor="name" className="w-1/4">{t('common.settings.name')}</label>
-          <input 
+          <Input 
             id="name"
             name="name"
             type='text' 
             value={name} 
             onChange={(e) => setName(e.target.value)}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-3 py-2"
             autoComplete="name"
           />
         </div>
         <div className="flex items-center mb-2">
           <label htmlFor="email" className="w-1/4">{t('common.settings.email')}</label>
-          <input 
+          <Input 
             id="email"
             name="email"
             type='text' 
             value={email} 
             onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-3 py-2"
             autoComplete="email"
           />
         </div>
 
         <div className="flex w-full items-center justify-end pt-4 ">
-          <button
+          <Button
             type="button"
+            variant={"secondary"}
             onClick={onClose}
-            className="cursor-pointer mr-2 px-4 py-2 text-sm font-medium bg-white rounded-md border border-gray-300 rounded-md"
+            className="cursor-pointer mr-2 px-4 py-2"
           >
             {t('operate.cancel')}
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="cursor-pointer px-4 py-2 text-sm font-medium text-white bg-tertiary rounded-md border-none rounded-md"
+            className="cursor-pointer px-4 py-2"
           >
             {t('operate.confirm')}
-          </button>
+          </Button>
         </div>
       </form>
      

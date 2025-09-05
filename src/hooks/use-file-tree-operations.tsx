@@ -7,12 +7,11 @@ import {
   renameNode
 } from '@/service/fileSystem'
 import { useFileTree } from '@/contexts/file-tree-context'
-import { useToastContext } from '@/components/base/toast'
+import Toast from '@/components/base/toast'
 import { useTranslation } from 'react-i18next'
 
 export const useFileTreeOperations = () => {
   const { mutateTreeData } = useFileTree()
-  const { notify } = useToastContext()
   const { t } = useTranslation()
 
   // 刷新文件树的通用方法
@@ -21,7 +20,7 @@ export const useFileTreeOperations = () => {
       await mutateTreeData()
       return true
     } catch (error) {
-        notify({ type: 'error', message: t('operate.error.refreshTreeFailed') })
+        Toast.notify({ type: 'error', message: t('operate.error.refreshTreeFailed') })
         return false
     }
   }, [mutateTreeData])
@@ -30,12 +29,12 @@ export const useFileTreeOperations = () => {
   const handleCreateDir = useCallback(async (parentId: string, name: string) => {
     try {
       await createDir(parentId, name)
-      notify({ type: 'success', message: t('operate.success.folderCreated') })
+      Toast.notify({ type: 'success', message: t('operate.success.folderCreated') })
       await mutateTreeData()
     } catch (error) {
-      notify({ type: 'error', message: t('operate.error.createFolderFailed') })
+      Toast.notify({ type: 'error', message: t('operate.error.createFolderFailed') })
     }
-  }, [mutateTreeData, notify])
+  }, [mutateTreeData])
 
   // 创建文件
   const handleCreateFile = useCallback(async (
@@ -46,34 +45,34 @@ export const useFileTreeOperations = () => {
   ) => {
     try {
       await createFile(parentId, name, content, mimeType)
-      notify({ type: 'success', message: t('operate.success.fileCreated') })
+      Toast.notify({ type: 'success', message: t('operate.success.fileCreated') })
       await mutateTreeData()
     } catch (error) {
-      notify({ type: 'error', message: t('operate.error.createFileFailed') })
+      Toast.notify({ type: 'error', message: t('operate.error.createFileFailed') })
     }
-  }, [mutateTreeData, notify])
+  }, [mutateTreeData])
 
   // 删除节点
   const handleDeleteNode = useCallback(async (nodeId: string, nodeName?: string) => {
     try {
       await deleteNode(nodeId)
-      notify({ type: 'success', message: nodeName ? t('operate.success.nodeDeleted', { name: nodeName }) : t('operate.success.projectDeleted') })
+      Toast.notify({ type: 'success', message: nodeName ? t('operate.success.nodeDeleted', { name: nodeName }) : t('operate.success.projectDeleted') })
       await mutateTreeData()
     } catch (error) {
-      notify({ type: 'error', message: t('operate.error.deleteFailed') })
+      Toast.notify({ type: 'error', message: t('operate.error.deleteFailed') })
     }
-  }, [mutateTreeData, notify])
+  }, [mutateTreeData])
 
   // 重命名节点
   const handleRenameNode = useCallback(async (nodeId: string, newName: string, oldName?: string) => {
     try {
       await renameNode(nodeId, newName)
-      notify({ type: 'success', message: oldName ? t('operate.success.nodeRenamed', { name: oldName }) : t('operate.success.projectRenamed') })
+      Toast.notify({ type: 'success', message: oldName ? t('operate.success.nodeRenamed', { name: oldName }) : t('operate.success.projectRenamed') })
       await mutateTreeData()
     } catch (error) {
-      notify({ type: 'error', message: t('operate.error.renameFailed') })
+      Toast.notify({ type: 'error', message: t('operate.error.renameFailed') })
     }
-  }, [mutateTreeData, notify])
+  }, [mutateTreeData])
 
   // 批量操作的确认对话框辅助方法
   const confirmOperation = useCallback((message: string, onConfirm: () => void) => {

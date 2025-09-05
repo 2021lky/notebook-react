@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import Modal from '@/components/base/modal'
+import Modal from '@/components/base/Modal'
 import { useToastContext } from '@/components/base/toast';
 import { useTranslation } from 'react-i18next'
+import Button from '@/components/base/Button'
+import Input from '@/components/base/Input'
 
 const validPassword = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
 
@@ -59,55 +61,56 @@ const PasswordEditModal: React.FC<PasswordEditModalProps> = ({
       <form onSubmit={handleSubmit}>
         <div className="flex items-center mb-2">
           <label htmlFor="oldPassword" className="w-1/4">{t('common.settings.oldPassword')}</label>
-          <input 
+          <Input 
             id="oldPassword"
             name="oldPassword"
             type='password' 
             value={oldPassword} 
             onChange={(e) => setOldPassword(e.target.value)}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-3 py-2"
             autoComplete="off"
           />
         </div>
         <div className="flex items-center mb-2">
           <label htmlFor="newPassword" className="w-1/4">{t('common.settings.newPassword')}</label>
-          <input 
+          <Input 
             id="newPassword"
             name="newPassword"
             type='password' 
             value={newPassword} 
             onChange={(e) => setNewPassword(e.target.value)}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-3 py-2"
             autoComplete="off"
           />
         </div>
         <div className="flex items-center mb-2">
           <label htmlFor="confirmPassword" className="w-1/4">{t('common.settings.confirmPassword')}</label>
-          <input 
+          <Input 
             id="confirmPassword"
             name="confirmPassword"
             type='password' 
             value={confirmPassword} 
             onChange={(e) => setConfirmPassword(e.target.value)}
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="flex-1 px-3 py-2"
             autoComplete="off"
           />
         </div>
 
         <div className="flex w-full items-center justify-end pt-4 ">
-          <button
+          <Button
+            variant="secondary"
             type="button"
             onClick={onClose}
-            className="cursor-pointer mr-2 px-4 py-2 text-sm font-medium bg-white rounded-md border border-gray-300 rounded-md"
+            className="cursor-pointer mr-2 px-4 py-2 text-sm font-medium rounded-md"
           >
             {t('operate.cancel')}
-          </button>
-          <button
+          </Button>
+          <Button
             type="submit"
-            className="cursor-pointer px-4 py-2 text-sm font-medium text-white bg-tertiary rounded-md border-none rounded-md"
+            className="cursor-pointer px-4 py-2 text-sm font-medium"
           >
             {t('operate.confirm')}
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

@@ -5,7 +5,7 @@ import {
   PortalToFollowElem,
   PortalToFollowElemContent,
   PortalToFollowElemTrigger,
-} from '@/components/base/portal-to-follow-elem'
+} from '@/components/base/PortalToFollowElem'
 
 type Props = {
   data?: any

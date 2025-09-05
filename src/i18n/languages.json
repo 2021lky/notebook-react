@@ -3,13 +3,13 @@
         {
             "name": "English",
             "nativeName": "English",
-            "code": "en",
+            "value": "en",
             "supported": true
         },
         {
             "name": "简体中文",
             "nativeName": "Chinese",
-            "code": "zh",
+            "value": "zh",
             "supported": true
         }
     ]

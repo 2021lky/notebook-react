@@ -1,5 +1,5 @@
 import { get, put, post } from "./base"
-import { StudyGoal } from "@/components/base/canlendar"
+import { StudyGoal } from "@/components/function/Canlendar"
 
 export const getTaskDaily = async (date?: string) => {
     const url = date ? 'tasks/daily?date=' + date : 'tasks/daily'

@@ -4,7 +4,7 @@ import {
   PortalToFollowElem,
   PortalToFollowElemContent,
   PortalToFollowElemTrigger,
-} from '@/components/base/portal-to-follow-elem'
+} from '@/components/base/PortalToFollowElem'
 import { RiMoreLine } from '@remixicon/react'
 import { TreeNodeData } from './index'
 import { useFileTreeOperations } from '@/hooks/use-file-tree-operations'
@@ -32,8 +32,8 @@ const FileMoreTrigger = ({ data }: { data: TreeNodeData }) => {
           e.stopPropagation()
         }}
       >
-        <div className="flex flex-col gap-1 w-24 card p-2 bg-secondary">
-          <div className={`${hover === "rename" ? 'bg-tertiary' : 'bg-white'} rounded select-text px-2 cursor-pointer`} 
+        <div className="flex flex-col gap-1 w-24 rounded p-2 bg-secondary-200">
+          <div className={`${hover === "rename" ? 'bg-tertiary' : 'bg-primary-400'} rounded select-text text-text-primary px-2 cursor-pointer`} 
             onMouseEnter={() => setHover("rename")} onMouseLeave={() => setHover("")} onClick={() => {
               const newName = prompt(t('common.fileOperations.inputNewFileName'), data.title)
               if (newName && newName.trim() && newName !== data.title) {
@@ -41,7 +41,7 @@ const FileMoreTrigger = ({ data }: { data: TreeNodeData }) => {
               }
               setOpen(false)
             }}>{t('common.fileOperations.rename')}</div>
-          <div className={`${hover === "delete" ? 'bg-tertiary' : 'bg-white'} rounded select-text px-2 cursor-pointer`} 
+          <div className={`${hover === "delete" ? 'bg-tertiary' : 'bg-primary-400'} rounded select-text text-text-primary px-2 cursor-pointer`} 
             onMouseEnter={() => setHover("delete")} onMouseLeave={() => setHover("")} onClick={() => {
               confirmOperation(
                 t('common.fileOperations.confirmDeleteFile', { fileName: data.title }),

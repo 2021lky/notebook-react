@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@config "../../../../tailwind.config.js";
+
+@layer components {
+  .btn {
+    @apply inline-flex justify-center items-center cursor-pointer whitespace-nowrap transition-all duration-200;
+  }
+
+  .btn-disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+
+  .btn-small {
+    @apply px-2 h-6 rounded-md text-xs font-medium;
+  }
+
+  .btn-medium {
+    @apply px-3.5 h-9 rounded-lg text-[13px] leading-4 font-medium;
+  }
+
+  .btn-large {
+    @apply px-4 h-12 rounded-[10px] text-sm font-semibold;
+  }
+
+  /* primary */
+  .btn-primary {
+    @apply shadow bg-primary border border-border-color text-white
+           hover:bg-tertiary hover:border-border-dark hover:text-white;
+  }
+  
+  .btn-secondary {
+    @apply shadow bg-white border border-border-color text-[#0f172a]
+           hover:bg-white  hover:border-border-dark;
+  }
+  /* warning */
+  .btn-warning {
+    @apply shadow bg-warning border border-warning text-white
+           hover:bg-warning-400 hover:border-warning-400 text-white;
+  }
+
+  /* success */
+  .btn-success {
+    @apply shadow bg-success border border-success text-white
+           hover:bg-success-400 hover:border-success-400 hover:text-white;
+  }
+
+  /* info */
+  .btn-info {
+    @apply shadow bg-info border border-info text-white
+           hover:bg-info-400 hover:border-info-400 hover:text-white;
+  }
+
+  /* danger */
+  .btn-danger {
+    @apply shadow bg-error border border-error text-white
+           hover:bg-error-400 hover:border-error-400 hover:text-white;
+  }
+
+}

@@ -29,7 +29,8 @@ const translation = {
         today: "Today",
         studyTask: "Study Task",
         taskProcess: "Task Process",
-        task: "Total {{total}} tasks"
+        task: "Total {{total}} tasks",
+        addTask: "Add task"
     },
     fileUploader: {
         uploadFromComputerLimit: "File size exceeds limit ({{size}})",
@@ -121,8 +122,7 @@ const translation = {
         vibrantOrange: "Vibrant Orange",
         freshGreen: "Fresh Green",
         elegantPurple: "Elegant Purple",
-        warmRed: "Warm Red",
-        deepBlue: "Deep Blue"
+        deepDark: "Deep Dark",
     },
     editor: {
         tip: 'Please select a file to edit',

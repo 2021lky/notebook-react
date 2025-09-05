@@ -15,8 +15,12 @@ import {
   useMergeRefs,
   useRole,
 } from '@floating-ui/react'
-
 import type { OffsetOptions, Placement } from '@floating-ui/react'
+// 鼠标悬停时显示的提示框（Tooltip）
+// 点击按钮弹出的下拉菜单（Dropdown）
+// 输入框聚焦时显示的辅助面板（如日期选择器、建议列表）
+// 任何需要「依附于某个元素」显示的浮动内容
+
 export type PortalToFollowElemOptions = {
   /*
   * top, bottom, left, right
@@ -30,6 +34,7 @@ export type PortalToFollowElemOptions = {
   triggerPopupSameWidth?: boolean
 }
 
+// 逻辑处理中心：负责处理浮动元素的定位计算、交互逻辑和状态管理
 export function usePortalToFollowElem({
   placement = 'bottom',
   open,
@@ -86,6 +91,7 @@ export function usePortalToFollowElem({
   )
 }
 
+// 上下文
 type ContextType = ReturnType<typeof usePortalToFollowElem> | null
 
 const PortalToFollowElemContext = React.createContext<ContextType>(null)
@@ -113,6 +119,7 @@ export function PortalToFollowElem({
   )
 }
 
+// 触发器
 export const PortalToFollowElemTrigger = (
   {
     ref: propRef,
@@ -150,8 +157,10 @@ export const PortalToFollowElemTrigger = (
     </div>
   )
 }
+
 PortalToFollowElemTrigger.displayName = 'PortalToFollowElemTrigger'
 
+// 内容区
 export const PortalToFollowElemContent = (
   {
     ref: propRef,

@@ -10,8 +10,7 @@ import {
   RiInformation2Fill,
 } from '@remixicon/react'
 import { createContext, useContext } from 'use-context-selector'
-import ActionButton from '@/components/base/action-button'
-import { noop } from 'lodash-es'
+import Button from '@/components/base/Button'
 import styles from './style.module.css'
 
 export type IToastProps = {
@@ -70,9 +69,9 @@ const Toast = ({
         }
       </div>
       {close
-        && (<ActionButton className={styles.closeButton} onClick={close}>
+        && (<Button className={styles.closeButton} onClick={close}>
           <RiCloseLine className={styles.closeIcon} />
-        </ActionButton>)
+        </Button>)
       }
     </div>
   </div>
@@ -112,6 +111,7 @@ export const ToastProvider = ({
   </ToastContext.Provider>
 }
 
+// 静态方法（便捷调用）
 Toast.notify = ({
   type,
   size = 'md',
@@ -128,7 +128,7 @@ Toast.notify = ({
 
     root.render(
       <ToastContext.Provider value={{
-        notify: noop,
+        notify: () => {},
         close: () => {
           if (holder) {
             root.unmount()

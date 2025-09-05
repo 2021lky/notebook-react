@@ -1,22 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import Account from '@/components/base/account'
-import Schedule from '@/components/base/canlendar'
 import ThemeContextProvider from '@/contexts/theme-context'
-import { ToastProvider } from '@/components/base/toast'
 import { useAuth } from '@/hooks/use-auth'
 import { useEffect } from 'react'
 import { SWRConfig } from 'swr'
 import { useTranslation } from 'react-i18next'
-import { useAuthStore } from '@/stores/use-auth-store';
-import notebookLogo from '@/assets/notebook.svg'
-import Logo from '@/assets/logo.svg'
-import { useNavigate } from 'react-router-dom'
 
 function Layout() {
   const { isLoading, checkAuth } = useAuth();
-  const { user } = useAuthStore()
   const { t } = useTranslation();
-  const navigate = useNavigate()
 
   // 每次刷新都重新验证身份
   useEffect(() => {
@@ -47,28 +38,11 @@ function Layout() {
         loadingTimeout: 3000, // 加载超时时间
       }}
     >
-      <ToastProvider>
         <ThemeContextProvider>
-          <div className="flex flex-col h-screen w-full">
-            <div className="w-full h-16 flex items-center justify-between px-2 header-gradient" >
-              <div className="flex items-center py-2 h-full" onClick={() => navigate('/')}>
-                <img src={Logo} alt="logo" className="h-12 w-12 pt-1"/>
-                <img src={notebookLogo} alt="logo" className="h-full w-28"/>
-              </div>
-              <div className="flex items-center">
-                <div><Schedule/></div>
-                <Account data={{
-                  name: user?.name,
-                }} />
-              </div>
-              
-            </div>
-            <div className='flex-1'>
+          <div className="h-screen w-full bg-bg-primary">
               <Outlet />
-            </div>
           </div>
         </ThemeContextProvider>
-      </ToastProvider>
     </SWRConfig>
   )
 }

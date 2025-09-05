@@ -1,0 +1,230 @@
+
+/* 自定义日历样式 */
+.react-calendar {
+  /* 日历容器基础样式 - 必需 */
+  background: transparent !important;
+  border: none !important;
+  font-family: inherit;
+  color: var(--text-secondary);
+  width: 100%;
+}
+
+/* 日历导航栏样式 - 必需 */
+.react-calendar__navigation {
+  background: transparent !important;
+  margin-bottom: 8px;
+  display: flex;
+  height: auto;
+}
+
+/* 导航按钮样式 - 必需 */
+.react-calendar__navigation button {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  min-width: auto;
+}
+
+/* 导航按钮悬停效果 - 必需 */
+.react-calendar__navigation button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 导航按钮禁用状态 - 必需 */
+.react-calendar__navigation button:disabled {
+  background: transparent !important;
+  opacity: 0.5;
+}
+
+/* 星期标题行样式 - 必需 */
+.react-calendar__month-view__weekdays {
+  background: transparent !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+/* 星期标题单元格样式 - 必需 */
+.react-calendar__month-view__weekdays__weekday {
+  color: var(--text-primary) !important;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 4px;
+  text-align: center;
+  text-decoration: none !important;
+}
+
+/* 日期单元格基础样式 - 必需 */
+.react-calendar__tile {
+  background: transparent !important;
+  border: none !important;
+  color: var(--text-primary) !important;
+  font-size: 13px;
+  padding: 8px 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  margin: 1px;
+  position: relative;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 日期单元格悬停效果 - 必需 */
+.react-calendar__tile:hover {
+  background: var(--primary) !important;
+}
+
+/* 选中日期样式 - 必需 */
+.react-calendar__tile--active {
+  background: var(--primary) !important;
+  color: white !important;
+}
+
+/* 选中日期悬停效果 - 必需 */
+.react-calendar__tile--active:hover {
+  background: var(--primary) !important;
+}
+
+/* 今天日期的默认样式重置 - 必需（避免与自定义样式冲突） */
+.react-calendar__tile--today {
+  background: inherit !important;
+  color: inherit !important;
+  font-weight: inherit !important;
+  box-shadow: none !important;
+}
+
+/* 今天日期悬停效果 - 必需 */
+.react-calendar__tile--today:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 自定义选中日期高亮样式 - 必需（项目特定功能） */
+.custom-today-tile {
+  background: var(--primary) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 自定义选中日期悬停效果 - 必需 */
+.custom-today-tile:hover {
+  background: var(--primary) !important;
+}
+
+/* 今天但未选中的日期样式 - 必需（项目特定功能） */
+.normal-today-tile {
+  background-color: transparent !important;
+  color: inherit !important;
+}
+
+/* 今天日期显示"今"字的样式 */
+.today-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: red;
+  text-align: center;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: inherit;
+}
+
+.date-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+}
+
+/* 隐藏今天日期的原始数字显示 */
+.react-calendar__tile:has(.today-text) {
+  font-size: 0 !important;
+  position: relative;
+}
+
+/* 兼容性方案：如果浏览器不支持 :has 选择器 */
+.react-calendar__tile.today-tile {
+  font-size: 0 !important;
+  position: relative;
+}
+
+/* 确保Tooltip包装的日期内容正确显示 */
+.react-calendar__tile .w-full.h-full {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+/* 相邻月份日期样式 - 可选（如果需要显示相邻月份日期） */
+.react-calendar__tile--neighboringMonth {
+  color: var(--text-tertiary) !important;
+  opacity: 0.5;
+}
+
+/* 年/十年/世纪视图的日期样式 - 可选（如果不使用这些视图可删除） */
+.react-calendar__year-view .react-calendar__tile,
+.react-calendar__decade-view .react-calendar__tile,
+.react-calendar__century-view .react-calendar__tile {
+  padding: 12px 6px;
+}
+
+/* 隐藏非当前月份日期的样式 - 必需（项目特定功能） */
+.react-calendar__tile.hidden-tile {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 深色模式适配 - 可选（如果不需要深色模式可删除） */
+@media (prefers-color-scheme: dark) {
+  .react-calendar__navigation button:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
+  
+  .react-calendar__tile:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+  }
+}
+
+  .header-gradient {
+    background: linear-gradient(135deg, 
+      var(--secondary) 0%, 
+      var(--primary) 50%,
+      var(--tertiary)  100%
+    );
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(var(--primary), 0.1);
+    transition: all var(--transition-theme);
+  }

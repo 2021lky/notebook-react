@@ -1,0 +1,27 @@
+html[data-theme="dark"] {
+  /* 主色调：深灰蓝色系，适合暗黑主题的沉稳感 */
+  --primary: #0f172a;       /* 最深主色（用于重要标题、强调区块） */
+  --secondary: #1e293b;     /* 中主色（用于卡片、容器背景） */
+  --tertiary: #334155;      /* 浅主色（用于 hover 状态、次级容器） */
+  
+  /* 背景色：与主色调呼应，形成层次 */
+  --bg-primary: #0f172a;    /* 页面背景（与主色统一，增强整体感） */
+  --bg-secondary: #1e293b;  /* 卡片/面板背景（与 secondary 一致，减少混乱） */
+  
+  /* 边框色：弱化处理，与背景协调 */
+  --border-color: #334155;  /* 默认边框（采用 tertiary 色，低对比度） */
+  --border-dark: #475569;   /* 强调边框（比默认边框稍亮，用于聚焦状态） */
+
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-tertiary: #c0c4cc;
+  --text-quaternary: #909399;
+  --text-quinary: #606266;
+  --text-disabled: #303133;
+
+  /* 功能色（保持主题协调） */
+  --success: #67c23a;       /* 成功状态（绿色） */
+  --warning: #e6a23c;       /* 警告状态（橙色） */
+  --error: #f56c6c;         /* 错误状态（红色） */
+  --info: #9e9e9e;        /* 信息提示 */
+}

@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 // 路由提供者组件
 export function AppRouter() {
   return (
-    <RouterProvider 
+    <RouterProvider
       router={router}
       future={{
         v7_startTransition: true,

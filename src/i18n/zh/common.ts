@@ -29,7 +29,8 @@ const translation = {
         today: "今",
         studyTask: "学习任务",
         taskProcess: "任务进度",
-        task: "今日共 {{total}} 个任务"
+        task: "今日共 {{total}} 个任务",
+        addTask: "添加任务"
     },
     fileUploader: {
         uploadFromComputerLimit: "文件大小超过限制 ({{size}})",
@@ -121,8 +122,7 @@ const translation = {
         vibrantOrange: '活力橙',
         freshGreen: '清新绿',
         elegantPurple: '优雅紫',
-        warmRed: '温暖红',
-        deepBlue: '深海蓝'
+        deepDark: '深邃黑',
     },
     editor: {
         tip: '请选择一个文件进行编辑',

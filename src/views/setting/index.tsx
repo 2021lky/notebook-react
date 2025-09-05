@@ -2,20 +2,25 @@
 
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
-import { useToastContext } from '@/components/base/toast'
+import Toast from '@/components/base/Toast'
 import PasswordEditModal from './password-edit-modal'
 import UserEditModal from './user-edit-modal'
 import TaskEditModal from './task-edit-modal'
 import { updateBatchTasks } from '@/service/schedule'
-import { StudyGoal } from "@/components/base/canlendar"
+import { StudyGoal } from "@/components/function/Canlendar"
 import { useAuthStore } from '@/stores/use-auth-store';
 import { updateUser, resetPassword } from '@/service/login';
 import { changeLanguage } from '@/i18n/i18next-config'
-
+import { default as Languages } from '@/i18n/language'
+import { getLocale } from "@/i18n/index"
+import { RiCloseLine } from '@remixicon/react'
+import { useNavigate } from "react-router-dom"
+import Button from "@/components/base/Button"
+import {SimpleSelect} from "@/components/base/Select"
 
 const Setting = () => {
-  const { t, i18n } = useTranslation()
-  const { notify } = useToastContext();
+  const { t } = useTranslation()
+  const navigate = useNavigate()
   const { user, updateUser: updateUserInStore } = useAuthStore(); // 获取updateUser方法
   const [showPasswordEditModal, setShowPasswordEditModal] = useState(false)
   const [showUserEditModal, setShowUserEditModal] = useState(false)
@@ -25,11 +30,11 @@ const Setting = () => {
     // 处理密码保存逻辑
     try {
       await resetPassword(data)
-      notify({ type: 'success', message: t('operate.success.passwordResetSuccess') })
+      Toast.notify({ type: 'success', message: t('operate.success.passwordResetSuccess') })
       setShowPasswordEditModal(false)
     } catch (e) {
       console.error('重置密码失败: ', e)
-      notify({ type: 'error', message: t('operate.error.passwordResetFailed') })
+      Toast.notify({ type: 'error', message: t('operate.error.passwordResetFailed') })
     }
   }
 
@@ -39,37 +44,41 @@ const Setting = () => {
       await updateUser(data)
       // 同步更新store中的用户信息
       updateUserInStore(data)
-      notify({ type: 'success', message: t('operate.success.userInfoSaveSuccess') })
+      Toast.notify({ type: 'success', message: t('operate.success.userInfoSaveSuccess') })
       setShowUserEditModal(false)
     } catch (e) {
       console.error('保存用户信息失败: ', e)
-      notify({ type: 'error', message: t('operate.error.userInfoSaveFailed') })
+      Toast.notify({ type: 'error', message: t('operate.error.userInfoSaveFailed') })
     }
   }
 
   const handleTaskSave = async (date: string, newTasks: StudyGoal[]) => {
     try {
       await updateBatchTasks(date, newTasks)
-      notify({ type: 'success', message: t('operate.success.taskSaveSuccess') })
+      Toast.notify({ type: 'success', message: t('operate.success.taskSaveSuccess') })
       setShowTaskEditModal(false)
     } catch (e) {
       console.error('保存任务失败: ', e)
-      notify({ type: 'error', message: t('operate.error.taskSaveFailed') })
+      Toast.notify({ type: 'error', message: t('operate.error.taskSaveFailed') })
     }
   }
 
   return (
-    <div className="theme-transition max-w-4xl mx-auto p-6">
+    <div className="w-full bg-bg-primary-200">
+    <div className="max-w-4xl mx-auto p-6 bg-bg-primary">
       {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-text-primary mb-2">{t('common.settings.title')}</h1>
-        <p className="text-text-secondary text-sm">{t('common.settings.description')}</p>
+      <div className="mb-8 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-text-primary mb-2">{t('common.settings.title')}</h1>
+          <p className="text-text-secondary text-sm">{t('common.settings.description')}</p>
+        </div>
+        <RiCloseLine className="w-6 h-6 text-text-primary cursor-pointer" onClick={() => navigate('/')} />
       </div>
 
       {/* 设置内容 */}
       <div className="space-y-6">
         {/* 用户设置 */}
-        <div className="card p-6 border border-border-primary rounded-lg shadow-sm">
+        <div className="p-6 border border-border-primary rounded-lg box-shadow-md">
           <div className="flex items-center mb-4">
             <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
               <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,32 +90,32 @@ const Setting = () => {
               <p className="text-text-secondary text-sm">{t('common.settings.userProfileDesc')}</p>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="flex items-center justify-between py-3 border-b border-border-secondary last:border-b-0">
               <div>
                 <h3 className="font-medium text-text-primary">{t('common.settings.userProfile')}</h3>
                 <p className="text-sm text-text-secondary">{t('common.settings.userProfileDesc')}</p>
               </div>
-              <button 
-                className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
+              <Button
+                className="px-4 py-2 text-sm font-medium rounded-md"
                 onClick={() => setShowUserEditModal(true)}
               >
                 {t('common.settings.editButton')}
-              </button>
+              </Button>
             </div>
-            
+
             <div className="flex items-center justify-between py-3 border-b border-border-secondary last:border-b-0">
               <div>
                 <h3 className="font-medium text-text-primary">{t('common.settings.accountSecurity')}</h3>
                 <p className="text-sm text-text-secondary">{t('common.settings.accountSecurityDesc')}</p>
               </div>
-              <button 
-                className="px-4 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors"
+              <Button
+                className="px-4 py-2 text-sm font-medium rounded-md"
                 onClick={() => setShowPasswordEditModal(true)}
               >
                 {t('common.settings.manageButton')}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -124,21 +133,27 @@ const Setting = () => {
               <p className="text-text-secondary text-sm">{t('common.settings.languageRegionDesc')}</p>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="flex items-center justify-between py-3">
               <div>
                 <h3 className="font-medium text-text-primary">{t('common.settings.interfaceLanguage')}</h3>
                 <p className="text-sm text-text-secondary">{t('common.settings.interfaceLanguageDesc')}</p>
               </div>
-              <select 
-                className="relative z-10 text-center py-2 text-sm font-medium rounded-md transition-colors outline-none hover:outline-none focus:outline-none cursor-pointer"
-                value={i18n.language}
-                onChange={(e) => changeLanguage(e.target.value)}
+              <SimpleSelect
+                defaultValue={getLocale()}
+                className="!w-32 text-center py-2 text-sm font-medium cursor-pointer text-text-primary !bg-primary"
+                items={Languages.map((item) => ({
+                  value: item.value,
+                  name: item.name,
+                }))}
+                onSelect={(value) => changeLanguage(value.value)}
+                wrapperClassName="!bg-primary"
+                optionWrapClassName="!bg-primary"
+                optionClassName="text-center py-2 hover:bg-tertiary text-text-primary bg-primary"
+                notClearable={true}
               >
-                <option value="zh" className="text-center py-2 px-4 hover:bg-tertiary">🇨🇳 中文</option>
-                <option value="en" className="text-center py-2 px-4 hover:bg-tertiary">🇺🇸 English</option>
-              </select>
+              </SimpleSelect>
             </div>
           </div>
         </div>
@@ -156,19 +171,19 @@ const Setting = () => {
               <p className="text-text-secondary text-sm">{t('common.settings.workflowDesc')}</p>
             </div>
           </div>
-          
+
           <div className="space-y-4">
             <div className="flex items-center justify-between py-3 border-b border-border-secondary last:border-b-0">
               <div>
                 <h3 className="font-medium text-text-primary">{t('common.settings.taskListManagement')}</h3>
                 <p className="text-sm text-text-secondary">{t('common.settings.taskListManagementDesc')}</p>
               </div>
-              <button
-                className="px-4 py-2 text-sm font-medium text-purple-600 hover:text-purple-700 hover:bg-purple-50 rounded-md transition-colors"
+              <Button
+                className="px-4 py-2 text-sm font-medium rounded-md"
                 onClick={() => setShowTaskEditModal(true)}
               >
                 {t('common.settings.editTaskButton')}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -195,6 +210,7 @@ const Setting = () => {
         onClose={() => setShowTaskEditModal(false)}
         onSave={handleTaskSave}
       />
+    </div>
     </div>
   )
 }

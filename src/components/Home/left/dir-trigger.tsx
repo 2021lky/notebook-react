@@ -1,10 +1,10 @@
 'use client'
-import { ReactNode, useState, useRef } from 'react'
+import { useState } from 'react'
 import {
   PortalToFollowElem,
   PortalToFollowElemContent,
   PortalToFollowElemTrigger,
-} from '@/components/base/portal-to-follow-elem'
+} from '@/components/base/PortalToFollowElem'
 import { RiMoreLine } from '@remixicon/react'
 import { TreeNodeData } from './index'
 import { useFileTreeOperations } from '@/hooks/use-file-tree-operations'
@@ -33,9 +33,9 @@ const DirMoreTrigger = ({ data }: { data: TreeNodeData }) => {
           e.stopPropagation()
         }}
       >
-        <div className="flex flex-col gap-1 w-28 card p-2 bg-secondary">
+        <div className="flex flex-col gap-1 w-28 rounded boxShadow-sm p-2 bg-secondary-200">
           <div 
-            className={`${hover === "mkdirfile" ? 'bg-tertiary' : 'bg-white'} rounded select-text px-2 cursor-pointer`}
+            className={`${hover === "mkdirfile" ? 'bg-tertiary' : 'bg-primary-400'} rounded select-text text-text-primary px-2 cursor-pointer`}
             onMouseEnter={() => setHover("mkdirfile")} onMouseLeave={() => setHover("")} onClick={() => {
               const fileName = prompt(t('common.fileOperations.inputFileName'))
               if (fileName && fileName.trim()) {
@@ -44,7 +44,7 @@ const DirMoreTrigger = ({ data }: { data: TreeNodeData }) => {
               setOpen(false)
             }}>{t('common.fileOperations.createFile')}</div>
           <div 
-            className={`${hover === "mkdir" ? 'bg-tertiary' : 'bg-white'} rounded select-text px-2 cursor-pointer`}
+            className={`${hover === "mkdir" ? 'bg-tertiary' : 'bg-primary-400'} rounded select-text text-text-primary px-2 cursor-pointer`}
             onMouseEnter={() => setHover("mkdir")} onMouseLeave={() => setHover("")} onClick={() => {
               const dirName = prompt(t('common.fileOperations.inputFolderName'))
               if (dirName && dirName.trim()) {
@@ -53,7 +53,7 @@ const DirMoreTrigger = ({ data }: { data: TreeNodeData }) => {
               setOpen(false)
             }}>{t('common.fileOperations.createFolder')}</div>
           <div 
-            className={`${hover === "delete" ? 'bg-tertiary' : 'bg-white'} rounded select-text px-2 cursor-pointer`}
+            className={`${hover === "delete" ? 'bg-tertiary' : 'bg-primary-400'} rounded select-text text-text-primary px-2 cursor-pointer`}
             onMouseEnter={() => setHover("delete")} onMouseLeave={() => setHover("")} onClick={() => {
               confirmOperation(
                 t('common.fileOperations.confirmDeleteFolder', { folderName: data.title }),
@@ -64,7 +64,7 @@ const DirMoreTrigger = ({ data }: { data: TreeNodeData }) => {
               )
             }}>{t('common.fileOperations.delete')}</div>
           <div 
-            className={`${hover === "rename" ? 'bg-tertiary' : 'bg-white'} rounded select-text px-2 cursor-pointer`}
+            className={`${hover === "rename" ? 'bg-tertiary' : 'bg-primary-400'} rounded select-text text-text-primary px-2 cursor-pointer`}
             onMouseEnter={() => setHover("rename")} onMouseLeave={() => setHover("")} onClick={() => {
               const newName = prompt(t('common.fileOperations.inputNewFolderName'), data.title)
               if (newName && newName.trim() && newName !== data.title) {

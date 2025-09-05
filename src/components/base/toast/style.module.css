@@ -7,8 +7,7 @@
   flex-grow: 1;
   z-index: 9999;
   overflow: hidden;
-  border: 1px solid var(--components-panel-border-subtle);
-  background: var(--components-panel-bg-blur);
+  border: 1px solid var(--text-tertiary);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   top: 0;
   right: -1rem;
@@ -31,19 +30,19 @@
 }
 
 .backgroundSuccess {
-  background-color: var(--toast-success-bg);
+  background-color: color-mix(in oklab, var(--success), white 30%);
 }
 
 .backgroundWarning {
-  background-color: var(--toast-warning-bg);
+  background-color: color-mix(in oklab, var(--warning), white 30%);
 }
 
 .backgroundError {
-  background-color: var(--toast-error-bg);
+  background-color: color-mix(in oklab, var(--error), white 30%);
 }
 
 .backgroundInfo {
-  background-color: var(--toast-info-bg);
+  background-color: color-mix(in oklab, var(--info), white 30%);
 }
 
 /* 内容布局 */
@@ -86,19 +85,19 @@
 }
 
 .iconSuccess {
-  color: var(--text-success);
+  color: var(--success);
 }
 
 .iconError {
-  color: var(--text-destructive);
+  color: var(--error);
 }
 
 .iconWarning {
-  color: var(--text-warning-secondary);
+  color: var(--warning);
 }
 
 .iconInfo {
-  color: var(--text-accent);
+  color: var(--info);
 }
 
 /* 文本容器 */
