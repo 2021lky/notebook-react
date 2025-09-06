@@ -6,7 +6,7 @@ import { TreeNodeData } from "@/components/Home/left/index"
 import ContentRight from "@/components/Home/right"
 import { SELECTED_KEY_STORAGE } from "@/constant"
 import { useTranslation } from "react-i18next"
-import notebookLogo from '@/assets/notebook.svg'
+// import notebookLogo from '@/assets/notebook.svg'
 import Logo from '@/assets/logo.svg'
 import { useAuthStore } from '@/stores/use-auth-store';
 import { useNavigate } from 'react-router-dom'
@@ -20,9 +20,6 @@ const HomeContent = () => {
 
     const [selectedKey, setSelectedKey] = useState<string>('')
     const [selectedNode, setSelectedNode] = useState<TreeNodeData | null>(null)
-
-    // localStorage key for storing selected tree node
-
 
     // 查找第一个文件夹（非叶子节点）
     const findFirstFolder = (nodes: TreeNodeData[]): string | null => {

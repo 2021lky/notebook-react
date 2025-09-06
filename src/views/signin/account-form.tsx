@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { z } from "zod"
 import { useTranslation } from "react-i18next";
+import Button from "@/components/base/Button"
+import Input from "@/components/base/Input"
 
 type iProps = {
     onSubmit: (data: any) => void;
@@ -77,13 +79,14 @@ const AccountForm = ({onSubmit}: iProps) => {
     }
 
     return (
-        <div className='flex flex-col w-1/3 card'>
+        <div className='flex flex-col w-1/3 rounded bg-primary'>
             <form onSubmit={handleSubmit}>
                 <div className='flex flex-col mb-md'>
                     <div className="flex items-center w-full">
                         <label className="w-24 text-right mr-2">{t('common.validateForm.name')}</label>
-                        <input 
-                            className={`input ${formErrors.name ? 'input-error' : ''}`}  
+                        <Input 
+                            
+                            destructive={ formErrors.name ? true : false}
                             type="text"
                             autoComplete="name"
                             value={formState.name} 
@@ -98,10 +101,11 @@ const AccountForm = ({onSubmit}: iProps) => {
                 <div className="flex flex-col mb-md">
                     <div className="flex items-center w-full">
                         <label className="w-24 text-right mr-2">{t('common.validateForm.email')}</label>
-                        <input 
-                            className={`input ${formErrors.email ? 'input-error' : ''}`}  
+                        <Input 
+                            
                             type="email"
                             autoComplete="email"
+                            destructive={ formErrors.email ? true : false}
                             value={formState.email} 
                             onChange={(e) => handleChange('email', e.target.value)} 
                         />
@@ -113,10 +117,11 @@ const AccountForm = ({onSubmit}: iProps) => {
                 <div className="flex flex-col mb-6">
                     <div className="flex items-center w-full">
                         <label className="w-24 text-right mr-2">{t('common.validateForm.password')}</label>
-                        <input 
-                            className={`input ${formErrors.password ? 'input-error' : ''}`} 
+                        <Input 
+                            
                             type="password" 
                             autoComplete="current-password"
+                            destructive={ formErrors.password ? true : false}
                             value={formState.password} 
                             onChange={(e) => handleChange('password', e.target.value)} 
                         />
@@ -126,19 +131,20 @@ const AccountForm = ({onSubmit}: iProps) => {
                     }
                 </div>
                 <div className="flex justify-end">
-                    <button 
+                    <Button 
                         type="button" 
-                        className="btn btn-secondary mr-2"
+                        variant={"secondary"}
+                        className="mr-2"
                         onClick={(e) => handleReset(e)}
                     >
                         {t('common.validateForm.reset')}
-                    </button>
-                    <button 
+                    </Button>
+                    <Button 
                         type="submit" 
-                        className="btn btn-primary"
+                        className=""
                     >
                         {t('common.validateForm.submit')}
-                    </button>
+                    </Button>
                 </div>
             </form>
         </div>

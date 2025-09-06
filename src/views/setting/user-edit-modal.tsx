@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Modal from '@/components/base/Modal'
-import { useToastContext } from '@/components/base/toast';
+import Toast from '@/components/base/Toast';
 import { useTranslation } from 'react-i18next'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
@@ -19,7 +19,6 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
   user
 }) => {
   const { t } = useTranslation()
-  const { notify } = useToastContext()
   const [name, setName] = useState(user?.name || '')
   const [email, setEmail] = useState(user?.email || '')
   
@@ -29,7 +28,7 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
     
     // 用户名不能为空验证
     if (!name.trim()) {
-      notify({
+      Toast.notify({
         type: 'error',
         message: t('operate.error.nameNoNone')
       })
@@ -39,7 +38,7 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
     // 邮箱格式验证
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!email.trim()) {
-      notify({
+      Toast.notify({
         type: 'error',
         message: t('operate.error..emailNoNone')
       })
@@ -47,7 +46,7 @@ const UserEditModal: React.FC<UserEditModalProps> = ({
     }
     
     if (!emailRegex.test(email)) {
-      notify({
+      Toast.notify({
         type: 'error',
         message: t('operate.error.emailValid')
       })

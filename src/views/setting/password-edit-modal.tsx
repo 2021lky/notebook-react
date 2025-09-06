@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Modal from '@/components/base/Modal'
-import { useToastContext } from '@/components/base/toast';
+import Toast from '@/components/base/Toast';
 import { useTranslation } from 'react-i18next'
 import Button from '@/components/base/Button'
 import Input from '@/components/base/Input'
@@ -19,7 +19,6 @@ const PasswordEditModal: React.FC<PasswordEditModalProps> = ({
   open
 }) => {
   const { t } = useTranslation()
-  const { notify } = useToastContext();
 
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -28,18 +27,18 @@ const PasswordEditModal: React.FC<PasswordEditModalProps> = ({
   const handleSave = () => {
     // 校验新密码格式
     if (!validPassword.test(newPassword)) {
-      notify({ type: 'warning', message: t('operate.error.passwordValid') });
+      Toast.notify({ type: 'warning', message: t('operate.error.passwordValid') });
       return
     }
     // 校验旧密码格式
     if (!validPassword.test(oldPassword)) {
-      notify({ type: 'warning', message: t('operate.error.passwordValid') });
+      Toast.notify({ type: 'warning', message: t('operate.error.passwordValid') });
       return
     }
 
     // 校验新密码和确认密码是否一致
     if (newPassword !== confirmPassword) {
-      notify({ type: 'warning', message: t('operate.error.newPasswordNotSame') });
+      Toast.notify({ type: 'warning', message: t('operate.error.newPasswordNotSame') });
       return
     }
     onSave({ oldPassword, newPassword })

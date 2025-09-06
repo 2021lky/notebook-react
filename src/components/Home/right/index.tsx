@@ -5,7 +5,7 @@ import FloatingButton from './FloatingButton';
 import TextSelectionBubble from './TextSelectionBubble';
 import EditorComponent from "@/components/function/editor";
 import { getFileContent, updateFileContent, type FileInfo } from '@/service/fileSystem';
-import { useToastContext } from '@/components/base/toast';
+import Toast from '@/components/base/Toast';
 import { useTranslation } from 'react-i18next';
 import Button from "@/components/base/Button"
 
@@ -22,7 +22,6 @@ const ContentRight = ({ selectedNode }: Props) => {
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const { notify } = useToastContext();
   const { t } = useTranslation();
 
   const handleOpenSidebar = () => {
@@ -77,7 +76,7 @@ const ContentRight = ({ selectedNode }: Props) => {
       }
       setHasUnsavedChanges(false);
     } catch (error) {
-      notify({ type: 'warning', message: t('operate.error.fileLoadFailed') });
+      Toast.notify({ type: 'warning', message: t('operate.error.fileLoadFailed') });
     } finally {
       setIsLoading(false);
     }
@@ -90,9 +89,9 @@ const ContentRight = ({ selectedNode }: Props) => {
     try {
       await updateFileContent(nodeId, content);
       setHasUnsavedChanges(false);
-      notify({ type: 'success', message: t('operate.success.fileSaved') });
+      Toast.notify({ type: 'success', message: t('operate.success.fileSaved') });
     } catch (error) {
-      notify({ type: 'error', message: t('operate.error.fileSaveFailed') });
+      Toast.notify({ type: 'error', message: t('operate.error.fileSaveFailed') });
     }
   };
 

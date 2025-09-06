@@ -62,9 +62,10 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     
     try {
       const response = await verifyLogin();
-      const responseData = await response.json() as any;
+      console.log(response)
+      const responseData = response as any;
       
-      if (response.ok && responseData?.data?.user) {
+      if (responseData?.user) {
         setUser(responseData.data.user);
         return true;
       } else {

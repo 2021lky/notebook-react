@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
 import { useAuthStore } from '@/stores/use-auth-store';
-import { useToastContext } from '@/components/base/toast';
+import Toast from '@/components/base/Toast';
 import { useTranslation } from 'react-i18next';
 
 export const useAuth = () => {
-  const { notify } = useToastContext();
   const { t } = useTranslation();
   
   // 从store获取状态和actions
@@ -21,15 +20,12 @@ export const useAuth = () => {
   const checkAuth = useCallback(async () => {
     try {
       const result = await storeCheckAuth();
-      if (!result) {
-        notify({ type: 'error', message: t('operate.error.authFailed') });
-      }
       return result;
     } catch (error) {
-      notify({ type: 'error', message: t('operate.error.authFailed') });
+      Toast.notify({ type: 'error', message: t('operate.error.authFailed') });
       return false;
     }
-  }, [storeCheckAuth, notify, t]);
+  }, [storeCheckAuth]);
 
   // 包装logout
   const logout = useCallback(() => {

@@ -7,7 +7,7 @@ import {
   renameNode
 } from '@/service/fileSystem'
 import { useFileTree } from '@/contexts/file-tree-context'
-import Toast from '@/components/base/toast'
+import Toast from '@/components/base/Toast'
 import { useTranslation } from 'react-i18next'
 
 export const useFileTreeOperations = () => {
@@ -29,7 +29,6 @@ export const useFileTreeOperations = () => {
   const handleCreateDir = useCallback(async (parentId: string, name: string) => {
     try {
       await createDir(parentId, name)
-      Toast.notify({ type: 'success', message: t('operate.success.folderCreated') })
       await mutateTreeData()
     } catch (error) {
       Toast.notify({ type: 'error', message: t('operate.error.createFolderFailed') })
@@ -45,7 +44,6 @@ export const useFileTreeOperations = () => {
   ) => {
     try {
       await createFile(parentId, name, content, mimeType)
-      Toast.notify({ type: 'success', message: t('operate.success.fileCreated') })
       await mutateTreeData()
     } catch (error) {
       Toast.notify({ type: 'error', message: t('operate.error.createFileFailed') })

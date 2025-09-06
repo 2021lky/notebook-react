@@ -20,7 +20,7 @@ export function FileTreeProvider({
 }: FileTreeProviderProps) {
   const { data: treeData, mutate: mutateTreeData, isLoading } = useSWR(
     ['fileTree'],
-    () => getFileTree().then((res) => res.data)
+    () => getFileTree()
   )
 
   const contextValue: FileTreeContextType = {

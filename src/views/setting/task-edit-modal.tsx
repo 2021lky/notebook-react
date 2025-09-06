@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Modal from '@/components/base/Modal'
-import { useToastContext } from '@/components/base/toast'
+import Toast from '@/components/base/Toast'
 import { useTranslation } from 'react-i18next'
 import { RiDeleteBinLine } from '@remixicon/react'
 import { StudyGoal } from '@/components/function/Canlendar'
@@ -20,7 +20,6 @@ const TaskEditModal: React.FC<TaskEditModalProps> = ({
   open
 }) => {
   const { t } = useTranslation()
-  const { notify } = useToastContext()
 
   const [tasks, setTasks] = useState<StudyGoal[]>([])
   // 修复第36行 - 初始化为今天的日期
@@ -36,7 +35,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = ({
   const handleDeleteTask = (index: number) => {
     const task = tasks[index]
     if (!task.title.trim()) {
-      notify({ type: 'warning', message: '空任务不可删除' })
+      Toast.notify({ type: 'warning', message: '空任务不可删除' })
       return
     }
     setTasks(prev => prev.map((task, i) => (i === index ? { ...task, title: '' } : task)))
@@ -47,7 +46,7 @@ const TaskEditModal: React.FC<TaskEditModalProps> = ({
     e.preventDefault()
     const normalizedTask = tasks.filter(t => t.title.trim() !== '')
     if (normalizedTask.length === 0) {
-      notify({ type: 'warning', message: '请添加任务' })
+      Toast.notify({ type: 'warning', message: '请添加任务' })
       return
     }
     onSave(date, normalizedTask)

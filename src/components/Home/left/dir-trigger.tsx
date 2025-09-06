@@ -7,7 +7,7 @@ import {
 } from '@/components/base/PortalToFollowElem'
 import { RiMoreLine } from '@remixicon/react'
 import { TreeNodeData } from './index'
-import { useFileTreeOperations } from '@/hooks/use-file-tree-operations'
+import { useFileTreeOperations } from '@/hooks/use-file-tree'
 import { useTranslation } from 'react-i18next'
 
 const DirMoreTrigger = ({ data }: { data: TreeNodeData }) => {

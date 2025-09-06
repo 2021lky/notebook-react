@@ -4,15 +4,23 @@ import { useAuth } from '@/hooks/use-auth'
 import { useEffect } from 'react'
 import { SWRConfig } from 'swr'
 import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom';
 
 function Layout() {
   const { isLoading, checkAuth } = useAuth();
   const { t } = useTranslation();
+  const location = useLocation()
 
   // 每次刷新都重新验证身份
   useEffect(() => {
+    const isSignInPage = location.pathname === '/signin';
+    // 登录页面不需要验证，非登录页才执行 checkAuth
+    if (!isSignInPage) {
+      checkAuth();
+    }
+
     checkAuth();
-  }, []);
+  }, [location.pathname]);
 
   // 加载中状态
   if (isLoading) {
@@ -38,11 +46,11 @@ function Layout() {
         loadingTimeout: 3000, // 加载超时时间
       }}
     >
-        <ThemeContextProvider>
-          <div className="h-screen w-full bg-bg-primary">
-              <Outlet />
-          </div>
-        </ThemeContextProvider>
+      <ThemeContextProvider>
+        <div className="h-screen w-full bg-bg-primary">
+          <Outlet />
+        </div>
+      </ThemeContextProvider>
     </SWRConfig>
   )
 }
