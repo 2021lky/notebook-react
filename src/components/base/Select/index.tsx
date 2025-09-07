@@ -209,7 +209,7 @@ const SimpleSelect: FC<ISelectProps> = ({
       }}
     >
       <div className={`group/simple-select relative h-9 ${wrapperClassName}`}>
-        {renderTrigger && <ListboxButton className='w-full'>{renderTrigger(selectedItem)}</ListboxButton>}
+        {renderTrigger && <ListboxButton className={`flex items-center w-full h-full rounded-lg border-0 bg-primary-50  sm:text-sm sm:leading-6 focus-visible:outline-none focus-visible:bg-primary-50 group-hover/simple-select:bg-primary-50 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${className}`}>{renderTrigger(selectedItem)}</ListboxButton>}
         {!renderTrigger && (
           <ListboxButton className={`flex items-center w-full h-full rounded-lg border-0 bg-primary-50 pl-3 pr-10 sm:text-sm sm:leading-6 focus-visible:outline-none focus-visible:bg-primary-50 group-hover/simple-select:bg-primary-50 ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${className}`}>
             <span className={`block truncate text-left text-sm font-normal text-text-tertiary ${!selectedItem?.name && 'text-text-primary'}`}>{selectedItem?.name ?? localPlaceholder}</span>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import getThemeColors, { ThemeColor } from './theme-colors'
+import { getLocale } from "@/i18n/index"
 
 export type ModalPropsType = {
   data: ThemeColor
@@ -19,7 +20,7 @@ const ThemeModal = ({
   }
 
   return (
-    <div className="card w-32 p-2 bg-secondary-200 rounded-md boxShadow-sm">
+    <div className={`card ${getLocale() === 'en' ? 'w-42' : 'w-32'} p-2 bg-secondary-200 rounded-md boxShadow-sm`}>
       <div className="flex flex-col flex-wrap justify-center">
         {
             themeColors.map((item) => (

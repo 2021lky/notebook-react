@@ -17,6 +17,7 @@ import { RiCloseLine } from '@remixicon/react'
 import { useNavigate } from "react-router-dom"
 import Button from "@/components/base/Button"
 import {SimpleSelect} from "@/components/base/Select"
+import { RiArrowDownSLine, RiArrowUpSLine } from "@remixicon/react"
 
 const Setting = () => {
   const { t } = useTranslation()
@@ -25,6 +26,8 @@ const Setting = () => {
   const [showPasswordEditModal, setShowPasswordEditModal] = useState(false)
   const [showUserEditModal, setShowUserEditModal] = useState(false)
   const [showTaskEditModal, setShowTaskEditModal] = useState(false)
+
+  const [show, setShow] = useState(false)
 
   const handlePasswordSave = async (data: { oldPassword: string, newPassword: string }) => {
     // 处理密码保存逻辑
@@ -142,18 +145,22 @@ const Setting = () => {
               </div>
               <SimpleSelect
                 defaultValue={getLocale()}
-                className="!w-32 text-center py-2 text-sm font-medium cursor-pointer text-text-primary !bg-primary"
+                className="!w-32 text-center py-2 !text-white text-sm font-medium cursor-pointer !bg-primary"
                 items={Languages.map((item) => ({
                   value: item.value,
                   name: item.name,
                 }))}
                 onSelect={(value) => changeLanguage(value.value)}
-                wrapperClassName="!bg-primary"
-                optionWrapClassName="!bg-primary"
-                optionClassName="text-center py-2 hover:bg-tertiary text-text-primary bg-primary"
+                renderTrigger={(item) => (
+                  <div className="flex items-center w-full bg-primary px-4 justify-between items-center" onClick={() => setShow(!show)}>
+                    <span className="truncate text-sm font-medium text-white">{item?.name ?? '请选择'}</span>
+                    { show ? <RiArrowUpSLine className="w-4 h-4 text-white" /> : <RiArrowDownSLine className="w-4 h-4 text-white" /> }
+                  </div>
+                )}
+                optionWrapClassName="!bg-primary-200 flex flex-col gap-1 focus:outline-none"
+                optionClassName="text-center py-2 hover:bg-tertiary text-white bg-primary"
                 notClearable={true}
-              >
-              </SimpleSelect>
+              />
             </div>
           </div>
         </div>

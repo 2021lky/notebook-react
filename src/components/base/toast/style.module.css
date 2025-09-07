@@ -26,7 +26,6 @@
   position: absolute;
   inset: 0;
   z-index: -10;
-  opacity: 0.4;
 }
 
 .backgroundSuccess {
@@ -155,7 +154,10 @@
   justify-content: center;
   width: 1.25rem;
   height: 1.25rem;
-  background-color: transparent;
+  background-color: #f0f0f0;
+  box-shadow: none; /* 移除盒阴影 */
+  outline: none; /* 移除聚焦时的默认轮廓（如点击后的蓝色边框） */
+  padding: 0;
 }
 
 .closeIcon {

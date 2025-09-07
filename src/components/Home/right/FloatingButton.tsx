@@ -1,126 +1,122 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { RiRobot2Line } from '@remixicon/react';
+import Button from '@/components/base/Button';
+
 type Props = {
     onClick: () => void;
     isVisible: boolean;
 }
 
+// FloatingButton 组件
 const FloatingButton = ({ onClick, isVisible }: Props) => {
-    // 初始位置设置在屏幕右侧区域
-    const getInitialPosition = () => {
-        const minX = window.innerWidth * 2 / 3; // 屏幕右侧1/3开始
-        const defaultX = window.innerWidth - 80; // 距离右边缘80px
-        return {
-            x: Math.max(minX, defaultX),
-            y: window.innerHeight / 2
-        };
-    };
-    const [position, setPosition] = useState(getInitialPosition());
-    const [isDragging, setIsDragging] = useState(false);
-    const [hasMoved, setHasMoved] = useState(false);
-    const [dragStart, setDragStart] = useState({ x: 0, y: 0, startX: 0, startY: 0 });
+    // 仅沿右侧上下移动：使用 transform 提升性能
     const buttonRef = useRef<HTMLButtonElement>(null);
 
+    // 垂直位移（像素），仅存在于 ref，不触发渲染
+    const yRef = useRef<number>(typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
+    const draggingRef = useRef(false);  // 是否正在拖拽
+    const startPointerYRef = useRef(0);  // 指针初始位置（Y 轴）
+    const startYRef = useRef(0);  // 元素初始位置（Y 轴）
+    const movedRef = useRef(false);  // 是否已移动
+    const rafRunningRef = useRef(false); // 是否正在运行动画循环
+
+    // 将最新的 y 应用到元素 transform（通过 rAF 合批）
+    const applyTransform = (y: number) => {
+        const el = buttonRef.current;
+        if (!el) return;
+        el.style.transform = `translate3d(0, ${y}px, 0)`;
+    };
+
+    // 计算垂直可移动的最大范围（基于按钮高度动态计算）
+    const getMaxY = () => {
+        const el = buttonRef.current;
+        const height = el ? el.offsetHeight : 60;
+        return Math.max(0, window.innerHeight - height - 8); // 预留 8px 边距
+    };
+
+    // 监听窗口尺寸变化，保持在可视范围内
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            if (!isDragging) return;
-
-            const deltaX = Math.abs(e.clientX - dragStart.startX);
-            const deltaY = Math.abs(e.clientY - dragStart.startY);
-            
-            // 如果移动距离超过5px，认为是拖拽
-            if (deltaX > 5 || deltaY > 5) {
-                setHasMoved(true);
-            }
-
-            const newX = e.clientX - dragStart.x;
-            const newY = e.clientY - dragStart.y;
-
-            // 限制按钮只能在屏幕右侧移动（右侧1/3区域）
-            const minX = window.innerWidth * 2 / 3; // 屏幕右侧1/3开始
-            const maxX = window.innerWidth - 60;
-            const maxY = window.innerHeight - 60;
-
-            setPosition({
-                x: Math.max(minX, Math.min(newX, maxX)),
-                y: Math.max(0, Math.min(newY, maxY))
-            });
+        const onResize = () => {
+            const maxY = getMaxY();
+            yRef.current = Math.min(Math.max(0, yRef.current), maxY);
+            applyTransform(yRef.current);
         };
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
 
-        const handleMouseUp = () => {
-            setIsDragging(false);
-            // 延迟重置hasMoved，避免点击事件被阻止
-            setTimeout(() => setHasMoved(false), 100);
-        };
-
-        if (isDragging) {
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
-        }
-
-        return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, [isDragging, dragStart]);
-
-    const handleMouseDown = (e: React.MouseEvent) => {
+    // 指针事件（统一鼠标/触摸）
+    const onPointerDown = (e: React.PointerEvent) => {
         if (!buttonRef.current) return;
+        // 捕获指针，拖拽更稳定
+        try {
+            (e.target as Element).setPointerCapture?.(e.pointerId);
+        } catch (_) {}
 
-        const rect = buttonRef.current.getBoundingClientRect();
-        setDragStart({
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top,
-            startX: e.clientX,
-            startY: e.clientY
-        });
-        setIsDragging(true);
-        setHasMoved(false);
+        draggingRef.current = true;  // 开始拖拽
+        movedRef.current = false;  // 根据拖拽阈值判断是否处于点击状态还是移动状态
+        startPointerYRef.current = e.clientY;
+        startYRef.current = yRef.current; // 更新移动前的初始位置
+
+        const handlePointerMove = (ev: PointerEvent) => {
+            if (!draggingRef.current) return;
+
+            const deltaY = ev.clientY - startPointerYRef.current;  // 移动距离
+            // 计算下一次位置
+            const nextY = Math.min(Math.max(0, startYRef.current + deltaY), getMaxY());
+            // 拖拽阈值（避免点击误触）
+            if (Math.abs(deltaY) > 5) movedRef.current = true;
+
+            yRef.current = nextY;
+            if (!rafRunningRef.current) {
+                rafRunningRef.current = true;
+                requestAnimationFrame(() => {
+                    applyTransform(yRef.current);
+                    rafRunningRef.current = false;
+                });
+            }
+        };
+
+        const handlePointerUp = (_ev: PointerEvent) => {
+            draggingRef.current = false;
+            window.removeEventListener('pointermove', handlePointerMove, true);
+            window.removeEventListener('pointerup', handlePointerUp, true);
+        };
+
+        window.addEventListener('pointermove', handlePointerMove, true);
+        window.addEventListener('pointerup', handlePointerUp, true);
     };
 
     const handleClick = (e: React.MouseEvent) => {
-        // 如果刚刚拖拽过，不触发点击事件
-        if (hasMoved) {
+        // 如果是拖拽结束，不触发点击
+        if (movedRef.current) {
             e.preventDefault();
+            e.stopPropagation();
             return;
         }
         onClick();
     };
 
-    // 响应式位置调整
-    useEffect(() => {
-        const handleResize = () => {
-            const minX = window.innerWidth * 2 / 3; // 屏幕右侧1/3开始
-            const maxX = window.innerWidth - 60;
-            const maxY = window.innerHeight - 60;
-            
-            setPosition(prev => ({
-                x: Math.max(minX, Math.min(prev.x, maxX)),
-                y: Math.max(0, Math.min(prev.y, maxY))
-            }));
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     if (!isVisible) return null;
 
     return (
-        <button
+        <Button
             ref={buttonRef}
-            className="fixed z-40 p-2 hover:bg-tertiary text-text-primary bg-primary rounded-full shadow-lg transition-colors duration-200 flex items-center justify-center cursor-move"
+            className="fixed z-40 p-2 hover:bg-tertiary text-text-primary bg-primary rounded-full shadow-lg transition-colors duration-200 flex items-center justify-center cursor-ns-resize"
             style={{
-                left: `${position.x}px`,
-                top: `${position.y}px`,
-                userSelect: 'none'
+                // 水平固定靠右，通过 CSS right 控制；垂直用 transform
+                right: 16,
+                top: 0,
+                transform: `translate3d(0, ${yRef.current}px, 0)`,
+                userSelect: 'none',
+                willChange: 'transform',
             }}
-            onMouseDown={handleMouseDown}
+            onPointerDown={onPointerDown}
             onClick={handleClick}
             title="AI助手"
         >
             <RiRobot2Line className="w-4 h-4" />
-        </button>
+        </Button>
     );
 };
 

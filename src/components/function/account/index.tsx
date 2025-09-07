@@ -50,7 +50,7 @@ const Account = ({
         </div>
       </PortalToFollowElemTrigger>
       <PortalToFollowElemContent className='z-[1000]'>
-        <div className="flex flex-col gap-1 w-24 rounded-md p-2 bg-secondary-200 boxShadow-sm">
+        <div className="flex flex-col gap-1 w-26 rounded-md p-2 bg-secondary-200 boxShadow-sm">
             <LanguageTrigger data={getLocale()}>
                 <div className="cursor-pointer rounded select-text pl-2 hover:bg-tertiary bg-primary-400 text-text-primary">
                     {t('common.account.language')}
