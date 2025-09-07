@@ -10,20 +10,18 @@ function Layout() {
   const { isLoading, checkAuth } = useAuth();
   const { t } = useTranslation();
   const location = useLocation()
+  const isSignInPage = location.pathname === '/signin';
 
   // 每次刷新都重新验证身份
   useEffect(() => {
-    const isSignInPage = location.pathname === '/signin';
     // 登录页面不需要验证，非登录页才执行 checkAuth
     if (!isSignInPage) {
       checkAuth();
     }
+  }, [isSignInPage, checkAuth]);
 
-    checkAuth();
-  }, [location.pathname]);
-
-  // 加载中状态
-  if (isLoading) {
+  // 加载中状态（仅在非登录页显示）
+  if (isLoading && !isSignInPage) {
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>

@@ -209,6 +209,7 @@ const afterResponse401: AfterResponseHook = async (request, options, response) =
         }
       }
       // 重新发送
+      console.log("refresh 之后 发送的url", request.url)
       return base(request.url, newOptions)
     } catch (refreshError) {
       // 刷新失败，返回原始401响应
@@ -268,8 +269,11 @@ async function base<T>(url: string, options: FetchOptionType = {}, otherOptions:
     getAbortController(abortController)
     options.signal = abortController.signal
   }
-  // 请求拼接
-  const fetchPathname = base + (url.startsWith('/') ? url : `/${url}`)
+  // 请求拼接（新增绝对地址判断）
+  const isAbsolute = /^https?:\/\//i.test(url)
+  const fetchPathname = isAbsolute
+    ? url
+    : base + (url.startsWith('/') ? url : `/${url}`)
 
   // 发送请求
   const res = await baseClient(fetchPathname, {

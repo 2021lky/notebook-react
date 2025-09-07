@@ -79,13 +79,12 @@ const AccountForm = ({onSubmit}: iProps) => {
     }
 
     return (
-        <div className='flex flex-col w-1/3 rounded bg-primary'>
+        <div className='flex flex-col w-1/3 rounded bg-secondary-200 p-8'>
             <form onSubmit={handleSubmit}>
-                <div className='flex flex-col mb-md'>
+                <div className='flex flex-col mb-2'>
                     <div className="flex items-center w-full">
                         <label className="w-24 text-right mr-2">{t('common.validateForm.name')}</label>
                         <Input 
-                            
                             destructive={ formErrors.name ? true : false}
                             type="text"
                             autoComplete="name"
@@ -98,7 +97,7 @@ const AccountForm = ({onSubmit}: iProps) => {
                     }
                     
                 </div>
-                <div className="flex flex-col mb-md">
+                <div className="flex flex-col mb-2">
                     <div className="flex items-center w-full">
                         <label className="w-24 text-right mr-2">{t('common.validateForm.email')}</label>
                         <Input 

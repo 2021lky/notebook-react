@@ -65,7 +65,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       console.log(response)
       const responseData = response as any;
       
-      if (responseData?.user) {
+      if (responseData?.data?.user) {
         setUser(responseData.data.user);
         return true;
       } else {

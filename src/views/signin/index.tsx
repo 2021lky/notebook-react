@@ -15,7 +15,7 @@ const SignIn = () => {
         })
     }
     return (
-        <div className="flex justify-center mt-64">
+        <div className="flex justify-center items-center w-full h-full">
             <AccountForm onSubmit={handleSubmit} />
         </div>
     )

@@ -2,7 +2,6 @@ import { API_PREFIX } from '@/constant'
 import { get, put } from "./base"
 import Toast from '@/components/base/Toast'
 import { tokenManager } from "./fetch"
-import useAuthStore from "@/stores/use-auth-store"
 
 export const login = async (params: any) => {
   try {
@@ -26,9 +25,6 @@ export const login = async (params: any) => {
     if (res.data?.accessToken && res.data?.refreshToken) {
       tokenManager.setTokens(res.data.accessToken, res.data.refreshToken)
     }
-    // 存储用户信息
-    const { setUser } = useAuthStore()
-    setUser(res.data.user)
     return res
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : '登录时发生未知错误';
