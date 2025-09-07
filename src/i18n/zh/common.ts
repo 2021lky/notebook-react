@@ -115,7 +115,7 @@ const translation = {
         aiAssistant: 'AI 助手',
         startConversation: '开始与AI助手对话吧！',
         clearConversation: '清空对话',
-        inputPlaceholder: '请输入您的消息，支持文件上传和语音输入...'
+        inputPlaceholder: '请输入您的消息，支持拖拽文件上传'
     },
     themes: {
         defaultBlue: '默认蓝',

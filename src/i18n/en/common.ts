@@ -115,7 +115,7 @@ const translation = {
         aiAssistant: "AI Assistant",
         startConversation: "Start chatting with AI assistant!",
         clearConversation: "Clear conversation",
-        inputPlaceholder: "Please enter your message, supports file upload and voice input..."
+        inputPlaceholder: "Please enter your message, supports file upload"
     },
     themes: {
         defaultBlue: "Default Blue",

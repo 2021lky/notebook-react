@@ -15,6 +15,7 @@ const FloatingButton = ({ onClick, isVisible }: Props) => {
     // 垂直位移（像素），仅存在于 ref，不触发渲染
     const yRef = useRef<number>(typeof window !== 'undefined' ? window.innerHeight / 2 : 0);
     const draggingRef = useRef(false);  // 是否正在拖拽
+    const startPointerYRef = useRef(0);  // 指针初始位置（Y 轴）
     const startYRef = useRef(0);  // 元素初始位置（Y 轴）
     const movedRef = useRef(false);  // 是否已移动
     const rafRunningRef = useRef(false); // 是否正在运行动画循环
@@ -53,13 +54,14 @@ const FloatingButton = ({ onClick, isVisible }: Props) => {
         } catch (_) {}
 
         draggingRef.current = true;  // 开始拖拽
-        movedRef.current = false;  // 根据拖拽阈值判断是否处于点击状态还是移动状态
+        movedRef.current = false;  // 重置移动状态
+        startPointerYRef.current = e.clientY;
         startYRef.current = yRef.current; // 更新移动前的初始位置
 
         const handlePointerMove = (ev: PointerEvent) => {
             if (!draggingRef.current) return;
 
-            const deltaY = ev.clientY - startYRef.current;  // 移动距离
+            const deltaY = ev.clientY - startPointerYRef.current;  // 移动距离，计算鼠标之间的距离，避免点击按钮下边之后y的位置改变
             // 计算下一次位置
             const nextY = Math.min(Math.max(0, startYRef.current + deltaY), getMaxY());
             // 拖拽阈值（避免点击误触）

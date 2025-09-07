@@ -70,16 +70,6 @@ const LLMSidebar: React.FC<Props> = ({ isOpen, onClose, initialText }) => {
         if (requestId) {
             stopChat({ requestId }).catch(() => { Toast.notify({ type: 'error', message: "停止失败" }) });
         }
-        const m: ChatMessage = {
-            id: requestId || uuid4(),
-            role: 'assistant',
-            content: streamContentRef.current,
-        }
-        setMessages((prev) => [...prev, m])
-        setIsStreaming(false)
-        setRequestId("")
-        setCurrentStreamContent("")
-        streamContentRef.current = "" // 清空当前流式内容
     }
 
     // 当消息更新时自动滚动到底部
