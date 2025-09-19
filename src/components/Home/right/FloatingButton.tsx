@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { RiRobot2Line } from '@remixicon/react';
 import Button from '@/components/base/Button';
 
@@ -35,15 +35,15 @@ const FloatingButton = ({ onClick, isVisible }: Props) => {
     };
 
     // 监听窗口尺寸变化，保持在可视范围内
-    useEffect(() => {
-        const onResize = () => {
-            const maxY = getMaxY();
-            yRef.current = Math.min(Math.max(0, yRef.current), maxY);
-            applyTransform(yRef.current);
-        };
-        window.addEventListener('resize', onResize);
-        return () => window.removeEventListener('resize', onResize);
-    }, []);
+    // useEffect(() => {
+    //     const onResize = () => {
+    //         const maxY = getMaxY();
+    //         yRef.current = Math.min(Math.max(0, yRef.current), maxY);
+    //         applyTransform(yRef.current);
+    //     };
+    //     window.addEventListener('resize', onResize);
+    //     return () => window.removeEventListener('resize', onResize);
+    // }, []);
 
     // 指针事件（统一鼠标/触摸）
     const onPointerDown = (e: React.PointerEvent) => {
