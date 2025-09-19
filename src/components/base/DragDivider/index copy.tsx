@@ -9,28 +9,21 @@ type Props = {
 }
 
 const DragDivider = ({classNameWrapper, className, childrenLeft, childrenRight, minLeftWidth}: Props) => {
-  const isDragging= useRef(false)
-  const leftWidth = useRef<number>(minLeftWidth ?? 0);
+  const [isDragging, setIsDragging] = useState(false)
+  const [leftWidth, setLeftWidth] = useState<number>(minLeftWidth ?? 0);
   const containerRef = useRef<HTMLDivElement>(null); 
-  const leftRef = useRef<HTMLDivElement>(null); 
-  const rafRunningRef = useRef(false);
 
-  const applyWidth = (width: number) => {
-    if(leftRef.current) {
-      leftRef.current.style.width = `${width}px`
-    }
-  }
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    isDragging.current = true;
+    setIsDragging(true);
   }
 
   const handleMouseUp = () => {
-    isDragging.current = false;
+    setIsDragging(false);
   }
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging.current) {
+    if (!isDragging) {
       return;
     }
     if (!containerRef.current) return;
@@ -40,14 +33,7 @@ const DragDivider = ({classNameWrapper, className, childrenLeft, childrenRight, 
       const min = minLeftWidth ?? 0;
       // 右侧至少保留 1px，避免把 divider 拖出容器外
       const clamped = Math.max(min, Math.min(newWidth, rect.width - 1));
-      leftWidth.current = clamped;
-      if (!rafRunningRef.current) {
-          rafRunningRef.current = true;
-          requestAnimationFrame(() => {
-              applyWidth(clamped);
-              rafRunningRef.current = false;
-          });
-      }
+      setLeftWidth(clamped);
   }
 
   return (
@@ -56,7 +42,7 @@ const DragDivider = ({classNameWrapper, className, childrenLeft, childrenRight, 
         onMouseUp={handleMouseUp}
         className={`flex w-full h-screen ${classNameWrapper}`}
     >
-        <div ref={leftRef} style={{ width: leftWidth.current > (minLeftWidth || 0) ? `${leftWidth.current}px` : `${minLeftWidth}px` }}>
+        <div style={{ width: leftWidth > (minLeftWidth || 0) ? `${leftWidth}px` : `${minLeftWidth}px` }}>
             {childrenLeft}
         </div>
         <div 
