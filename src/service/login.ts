@@ -17,7 +17,8 @@ export const login = async (params: any) => {
       Toast.notify({ type: "error", message: `登录失败:${response.status} ${response.statusText}`})
     }
     const res = await response.json();
-    if (res.code !== 200) {
+    console.log("login", res)
+    if (res.status !== 'success') {
       Toast.notify({ type: "error", message: res.message || '登录失败，请检查账号密码' });
     }
 
