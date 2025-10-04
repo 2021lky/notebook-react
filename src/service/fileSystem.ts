@@ -2,6 +2,7 @@ import { get, post, put, del } from "./base"
 import { TreeNodeData } from "@/components/Home/left/index"
 import Toast from "@/components/base/Toast"
 import i18n from '@/i18n/i18next-config'
+import type { Node, Edge } from "@/components/base/workflow/types"
 
 // 定义树节点的类型
 export interface TreeNode {
@@ -88,4 +89,14 @@ export const getFileContent = async (nodeId: string): Promise<ApiResponse<FileIn
 // 更新文件内容
 export const updateFileContent = async (nodeId: string, content: string): Promise<{ success: boolean }> => {
   return put(`filesystem/file/${nodeId}`,{body: { content }})
+}
+
+// 脑图
+export const saveWorkflow = async (dirId: string, nodes: Node[], edges: Edge[]) => {
+  return post(`filesystem/workflow/${dirId}`, { body: { nodes, edges }})
+}
+
+// 获取脑图
+export const getWorkflow = async (dirId: string): Promise<{ message: { nodes: Node[], edges: Edge[] } }> => {
+  return get(`filesystem/workflow/${dirId}`)
 }

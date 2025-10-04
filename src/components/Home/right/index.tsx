@@ -8,9 +8,13 @@ import { getFileContent, updateFileContent, type FileInfo } from '@/service/file
 import Toast from '@/components/base/Toast';
 import { useTranslation } from 'react-i18next';
 import Button from "@/components/base/Button"
+import Workflow from "@/components/base/workflow"
+import { saveWorkflow, getWorkflow } from '@/service/fileSystem';
+import type { Node, Edge } from "@/components/base/workflow/types"
+import { initialNode, initialEdge } from "@/components/base/workflow/contents"
 
 type Props = {
-    selectedNode: TreeNodeData | null;
+  selectedNode: TreeNodeData | null;
 }
 const ContentRight = ({ selectedNode }: Props) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -25,29 +29,29 @@ const ContentRight = ({ selectedNode }: Props) => {
   const { t } = useTranslation();
 
   const handleOpenSidebar = () => {
-      setIsSidebarOpen(true);
+    setIsSidebarOpen(true);
   };
 
   const handleCloseSidebar = () => {
-      setIsSidebarOpen(false);
-      setInitialText(''); // 关闭侧边栏时清空初始文本
+    setIsSidebarOpen(false);
+    setInitialText(''); // 关闭侧边栏时清空初始文本
   };
 
   const handleAISearch = (text: string) => {
-      setInitialText(text);
-      setIsSidebarOpen(true);
-      setSelectedText(''); // 清空选中文本
+    setInitialText(text);
+    setIsSidebarOpen(true);
+    setSelectedText(''); // 清空选中文本
   };
 
   const handleCloseBubble = () => {
-      setSelectedText('');
+    setSelectedText('');
   };
 
   const handleContainerClick = (e: React.MouseEvent) => {
     // 如果点击的不是气泡本身，则关闭气泡
     const target = e.target as HTMLElement;
     if (!target.closest('.text-selection-bubble')) {
-        setSelectedText('');
+      setSelectedText('');
     }
   };
 
@@ -58,14 +62,14 @@ const ContentRight = ({ selectedNode }: Props) => {
     }
   };
 
-    // 加载文件内容
+  // 加载文件内容
   const loadFileContent = async (nodeId: string) => {
     if (!nodeId) return;
-    
+
     setIsLoading(true);
     try {
       const response = await getFileContent(nodeId);
-      
+
       // 保存文件信息
       setFileInfo(response.data);
       // 后端现在直接返回content字段
@@ -85,7 +89,7 @@ const ContentRight = ({ selectedNode }: Props) => {
   // 保存文件内容
   const saveFileContent = async (nodeId: string, content: string) => {
     if (!nodeId) return;
-    
+
     try {
       await updateFileContent(nodeId, content);
       setHasUnsavedChanges(false);
@@ -130,84 +134,110 @@ const ContentRight = ({ selectedNode }: Props) => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [selectedNode?.key, hasUnsavedChanges, fileContent]);
 
-    return (
-        <div className="w-full h-full p-4 relative flex justify-end" ref={contentRef} onClick={handleContainerClick}>
-            <div className={`h-full flex-1 ${isSidebarOpen ? "pr-80" : ""}`}>
-                {selectedNode ? (
-                     selectedNode.isLeaf ? (
-                         isLoading ? (
-                             <div className="flex items-center justify-center h-full text-gray-500">
-                                 <div className="flex items-center space-x-2">
-                                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
-                                     <span>正在加载文件内容...</span>
-                                 </div>
-                             </div>
-                         ) : (
-                             <div className="h-full flex flex-col">
-                                 <div className="flex items-center justify-between p-2 bg-transparent">
-                                     <div className="flex flex-col">
-                                         <span className="text-sm font-medium text-text-primary">
-                                              {fileInfo?.name || selectedNode.name || selectedNode.title}
-                                          </span>
-                                         {fileInfo && (
-                                             <span className="text-xs text-text-primary">
-                                                 {fileInfo.mime_type} • {(fileInfo.size / 1024).toFixed(2)} KB
-                                             </span>
-                                         )}
-                                     </div>
-                                     <div className="flex items-center gap-2">
-                                         {hasUnsavedChanges && (
-                                             <Button
-                                                 onClick={handleSaveFile}
-                                                 className="px-3 py-1"
-                                             >
-                                                 {t('operate.save')}
-                                             </Button>
-                                         )}
-                                     </div>
-                                 </div>
-                                 <div className="flex-1">
-                                     <EditorComponent
-                                          content={fileContent}
-                                          onContentChange={handleContentChange}
-                                          onTextSelection={handleEditorTextSelection}
-                                      />
-                                 </div>
-                             </div>
-                         )
-                     ) : (
-                         <div className="flex items-center justify-center h-full text-gray-500">
-                             {t("common.editor.tip")}
-                         </div>
-                     )
-                 ) : (
-                     <div className="flex items-center justify-center h-full text-gray-500">
-                         {t("common.editor.tip")}
-                     </div>
-                 )}
+  // workflow
+  const [nodes, setNodes] = useState<Node[]>(initialNode);
+  const [edges, setEdges] = useState<Edge[]>(initialEdge);
+
+  useEffect(() => {
+    if (selectedNode?.key) {
+      getWorkflow(selectedNode.key).then((response) => {
+        setNodes(response.message.nodes.length > 0 ? response.message.nodes : initialNode);
+        setEdges(response.message.edges.length > 0 ? response.message.edges : initialEdge);
+      });
+    }
+  }, [selectedNode?.key]);
+
+  const onSaveWorkflow = (nodes: Node[], edges: Edge[]) => {
+    if (selectedNode?.key) {
+      saveWorkflow(selectedNode.key, nodes, edges).then(()=>{
+          Toast.notify({ type: 'success', message: t('保存成功') });
+      }).catch(()=>{
+        Toast.notify({ type: 'error', message: t('保存失败') });
+      });
+    }
+  };
+  return (
+    <div className="w-full h-full px-4 relative flex justify-end" ref={contentRef} onClick={handleContainerClick}>
+      <div className={`h-full flex-1 ${isSidebarOpen ? "pr-80" : ""}`}>
+        {selectedNode ? (
+          selectedNode.isLeaf ? (
+            isLoading ? (
+              <div className="flex items-center justify-center h-full text-text-primary">
+                <div className="flex items-center space-x-2">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-border-dark"></div>
+                  <span>正在加载文件内容...</span>
+                </div>
+              </div>
+            ) : (
+              <div className="h-full flex flex-col">
+                <div className="flex items-center justify-between p-2 bg-transparent">
+                  <div className="flex flex-col">
+                    <span className="text-sm font-medium text-text-primary">
+                      {fileInfo?.name || selectedNode.name || selectedNode.title}
+                    </span>
+                    {fileInfo && (
+                      <span className="text-xs text-text-primary">
+                        {fileInfo.mime_type} • {(fileInfo.size / 1024).toFixed(2)} KB
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {hasUnsavedChanges && (
+                      <Button
+                        onClick={handleSaveFile}
+                        className="px-3 py-1"
+                      >
+                        {t('operate.save')}
+                      </Button>
+                    )}
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <EditorComponent
+                    content={fileContent}
+                    onContentChange={handleContentChange}
+                    onTextSelection={handleEditorTextSelection}
+                  />
+                </div>
+              </div>
+            )
+          ) : (
+            <div className="h-full ">
+              <Workflow
+                initialNodes={nodes}
+                initialEdges={edges}
+                onSave={onSaveWorkflow}
+              />
             </div>
-            
-            {/* 悬浮按钮 */}
-            <FloatingButton 
-                onClick={handleOpenSidebar}
-                isVisible={!isSidebarOpen}
-            />
-            
-            {/* LLM侧边栏 */}
-            <LLMSidebar 
-                isOpen={isSidebarOpen}
-                onClose={handleCloseSidebar}
-                initialText={initialText}
-            />
-            
-            {/* 文本选择气泡 */}
-            <TextSelectionBubble
-                selectedText={selectedText}
-                position={bubblePosition}
-                onAISearch={handleAISearch}
-                onClose={handleCloseBubble}
-            />
-        </div>
-    )
+          )
+        ) : (
+          <div className="flex items-center justify-center h-full text-text-primary">
+            {t("common.editor.tip")}
+          </div>
+        )}
+      </div>
+
+      {/* 悬浮按钮 */}
+      <FloatingButton
+        onClick={handleOpenSidebar}
+        isVisible={!isSidebarOpen}
+      />
+
+      {/* LLM侧边栏 */}
+      <LLMSidebar
+        isOpen={isSidebarOpen}
+        onClose={handleCloseSidebar}
+        initialText={initialText}
+      />
+
+      {/* 文本选择气泡 */}
+      <TextSelectionBubble
+        selectedText={selectedText}
+        position={bubblePosition}
+        onAISearch={handleAISearch}
+        onClose={handleCloseBubble}
+      />
+    </div>
+  )
 }
 export default ContentRight

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { RiCalendar2Line, RiCheckboxCircleLine, RiCheckboxBlankCircleLine } from '@remixicon/react'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import MouseFollowTooltip from '@/components/base/MouseFollowTooltip'
+import Tooltip from '@/components/base/tooltip'
 import { getTaskDaily, updateTask } from '@/service/schedule'
 import TaskEditModal from '@/views/setting/task-edit-modal'
 import { updateBatchTasks } from '@/service/schedule'
@@ -160,7 +160,7 @@ const Schedule = () => {
         </div>
       </PortalToFollowElemTrigger>
 
-      <PortalToFollowElemContent className='z-[49] w-96'>
+      <PortalToFollowElemContent className='z-[100] w-96'>
         <div className="flex flex-col gap-1 px-4 py-2 rounded bg-secondary-200">
           <div
             className="bg-secondary-300 rounded p-2 mb-4"
@@ -181,23 +181,24 @@ const Schedule = () => {
                 const isToday = date.toDateString() === today.toDateString();
                 if (isToday) {
                   return (
-                    <MouseFollowTooltip
-                      content={studyGoals.length > 0 ? t('common.studyPlan.task', { total: totalCount }) : t('common.common.noArrangement')}
-                      className="bg-white rounded text-sm max-w-32"
+                    <Tooltip
+                      needsDelay={true}
+                      popupContent={studyGoals.length > 0 ? t('common.studyPlan.task', { total: totalCount }) : t('common.common.noArrangement')}
+                      popupClassName="bg-white rounded text-sm max-w-32 text-text-primary"
                     >
                       <div className="today-text">{t('common.studyPlan.today')}</div>
-                    </MouseFollowTooltip>
+                    </Tooltip>
                   );
                 }
                 // 为其他日期添加Tooltip
                 return (
-                  <MouseFollowTooltip
-                    content={studyGoals.length > 0 ? t('common.studyPlan.task', { total: totalCount }) : t('common.common.noArrangement')}
-                    className="bg-white rounded text-sm max-w-32"
+                  <Tooltip
+                    needsDelay={true}
+                    popupContent={studyGoals.length > 0 ? t('common.studyPlan.task', { total: totalCount }) : t('common.common.noArrangement')}
+                    popupClassName="bg-white rounded text-sm max-w-32 text-text-primary"
                   >
-                    <div className="date-text">
-                    </div>
-                  </MouseFollowTooltip>
+                    <div className="date-text"></div>
+                  </Tooltip>
                 );
               }}
               tileClassName={({ date, view }) => {
